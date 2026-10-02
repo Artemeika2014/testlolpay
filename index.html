@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>LOL Pay</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700;800;900;1000&display=swap" rel="stylesheet">
+    
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html,body { height: 100%; margin: 0; padding: 0; background: #070a10; font-family: 'Comfortaa', sans-serif; color: #eaf1ff; overflow: hidden; }
+        
+        body {
+            background:
+                radial-gradient(800px 500px at 20% -10%, rgba(43,134,255,.2), transparent 60%),
+                radial-gradient(700px 500px at 80% 0%, rgba(168,85,247,.15), transparent 55%),
+                radial-gradient(800px 600px at 50% 110%, rgba(34,197,94,.08), transparent 55%),
+                #070a10;
+        }
+        
+        .app { height: 100%; display: flex; flex-direction: column; }
+        .screen { display: none; height: 100%; overflow-y: auto; padding: 20px; padding-top: max(20px, env(safe-area-inset-top)); padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+        .screen.active { display: block; }
+        
+        .glass {
+            background: rgba(18,24,38,.85);
+            border: 1px solid rgba(255,255,255,.08);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 18px 45px rgba(0,0,0,.55);
+            border-radius: 24px;
+            padding: 20px;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+        
+        .btn {
+            background: rgba(40,40,50,.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid transparent;
+            background-image: linear-gradient(rgba(40,40,50,.85), rgba(40,40,50,.85)), linear-gradient(120deg,#5B8CFF,#8A5BFF,#5B8CFF);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 8px 18px rgba(0,0,0,.6);
+            cursor: pointer;
+            transition: .2s;
+            border-radius: 50px;
+            padding: 14px 28px;
+            font-weight: 800;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+            font-family: 'Comfortaa', sans-serif;
+            text-align: center;
+        }
+        .btn:hover { box-shadow: 0 0 20px rgba(120,140,255,.3), 0 8px 18px rgba(0,0,0,.6); }
+        .btn:active { transform: scale(.97); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .btn-danger { background: rgba(239,68,68,.2); border-color: #ef4444; color: #ef4444; }
+        .btn-success { background: rgba(34,197,94,.2); border-color: #22c55e; color: #22c55e; }
+        .btn-gold { background: rgba(251,191,36,.2); border-color: #fbbf24; color: #fbbf24; }
+        .btn-blue { background: rgba(43,134,255,.15); border-color: #2b86ff; color: #2b86ff; }
+        .btn-purple { background: rgba(168,85,247,.15); border-color: #a855f7; color: #a855f7; }
+        
+        .input-field {
+            background: rgba(40,40,50,.85);
+            backdrop-filter: blur(12px);
+            border: 2px solid transparent;
+            background-image: linear-gradient(rgba(40,40,50,.85), rgba(40,40,50,.85)), linear-gradient(120deg,#5B8CFF,#8A5BFF,#5B8CFF);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 8px 18px rgba(0,0,0,.6);
+            border-radius: 16px;
+            padding: 14px 16px;
+            color: #eaf1ff;
+            font-size: 16px;
+            width: 100%;
+            transition: .2s;
+            font-family: 'Comfortaa', sans-serif;
+        }
+        .input-field:focus { outline: none; box-shadow: 0 0 16px rgba(120,140,255,.35), 0 8px 18px rgba(0,0,0,.6); }
+        .input-field::placeholder { color: rgba(234,241,255,.35); }
+        
+        .avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,.08); flex-shrink: 0; }
+        .avatar.small { width: 40px; height: 40px; }
+        .avatar.big { width: 80px; height: 80px; }
+        
+        .balance-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 42px;
+            font-weight: 1000;
+            padding: 16px 0;
+            background: linear-gradient(135deg, #2b86ff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .profile-info h2 { margin: 0; font-size: 20px; font-weight: 800; }
+        .profile-info p { margin: 4px 0 0; color: rgba(234,241,255,.6); font-size: 14px; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(234,241,255,.6);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 0;
+            background: none;
+            border: none;
+            font-family: 'Comfortaa', sans-serif;
+            color: #eaf1ff;
+        }
+        .back-btn:hover { color: #2b86ff; }
+        
+        .divider {
+            height: 1px;
+            background: rgba(255,255,255,.08);
+            margin: 16px 0;
+        }
+        
+        .space-y-12 > * + * { margin-top: 12px; }
+        .space-y-8 > * + * { margin-top: 8px; }
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .text-muted { color: rgba(234,241,255,.6); font-size: 14px; }
+        .text-sm { font-size: 13px; }
+        .mt-12 { margin-top: 12px; }
+        .mt-20 { margin-top: 20px; }
+        .gap-10 { gap: 10px; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .flex-1 { flex: 1; }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .badge-blue { background: rgba(43,134,255,.2); color: #2b86ff; }
+        .badge-gold { background: rgba(251,191,36,.2); color: #fbbf24; }
+        .badge-green { background: rgba(34,197,94,.2); color: #22c55e; }
+        .badge-purple { background: rgba(168,85,247,.2); color: #a855f7; }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10,14,22,.92);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 60px;
+            padding: 14px 28px;
+            color: white;
+            font-size: 14px;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 18px 45px rgba(0,0,0,.55);
+            font-weight: 600;
+            max-width: 90%;
+            text-align: center;
+        }
+        .toast.success { border-color: #22c55e; background: rgba(34,197,94,.15); }
+        .toast.error { border-color: #ef4444; background: rgba(239,68,68,.15); }
+        @keyframes slideUp {
+            from { transform: translateX(-50%) translateY(30px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+        
+        .payment-animation {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(16px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .payment-animation .check { font-size: 80px; animation: popIn 0.6s cubic-bezier(0.16,1,0.3,1); }
+        .payment-animation .amount {
+            font-size: 48px;
+            font-weight: 1000;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .payment-animation .from { font-size: 18px; color: rgba(234,241,255,.6); margin-top: 8px; }
+        @keyframes popIn { 0% { transform: scale(0) rotate(-20deg); opacity: 0; } 60% { transform: scale(1.2) rotate(5deg); } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+        
+        .qr-container {
+            background: white;
+            padding: 16px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 12px 0;
+            min-height: 200px;
+        }
+        
+        .payment-code {
+            background: rgba(255,255,255,.05);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            border: 2px dashed rgba(251,191,36,.3);
+            margin: 12px 0;
+        }
+        .payment-code .code {
+            font-size: 48px;
+            font-weight: 1000;
+            letter-spacing: 8px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Courier New', monospace;
+        }
+        .payment-code .label { font-size: 13px; color: rgba(234,241,255,.5); margin-bottom: 4px; }
+        
+        .payment-info {
+            background: rgba(255,255,255,.05);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 12px 0;
+            border: 1px solid rgba(255,255,255,.08);
+        }
+        .payment-info .row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 15px; }
+        .payment-info .label { color: rgba(234,241,255,.6); }
+        .payment-info .value { font-weight: 700; }
+        
+        .timer {
+            text-align: center;
+            font-size: 14px;
+            color: rgba(234,241,255,.6);
+            padding: 8px;
+            font-weight: 600;
+        }
+        .timer.warning { color: #fbbf24; }
+        .timer.danger { color: #ef4444; }
+        
+        .source-card {
+            background: rgba(255,255,255,.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+            transition: .2s;
+        }
+        .source-card.selected {
+            background: rgba(43,134,255,.2);
+            border-color: #2b86ff;
+        }
+        .source-card.disabled {
+            opacity: 0.5;
+        }
+        .source-card .source-name {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+        .source-card .source-balance {
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .source-card .source-balance.enough { color: #22c55e; }
+        .source-card .source-balance.not-enough { color: #ef4444; }
+        
+        .fast-payment-card {
+            background: rgba(18,24,38,.85);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .fast-payment-card .code-label { font-size: 13px; color: rgba(234,241,255,.5); margin-bottom: 8px; }
+        .fast-payment-card .code-value { font-size: 22px; font-weight: 800; letter-spacing: 4px; color: #fbbf24; font-family: 'Courier New', monospace; margin-bottom: 12px; }
+        .fast-payment-card .amount-value { font-size: 24px; font-weight: 1000; color: #fbbf24; }
+        .fast-payment-card .distance { font-size: 12px; color: rgba(234,241,255,.5); margin-top: 4px; }
+        
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="app">
+
+    <!-- ===== AUTH SCREEN ===== -->
+    <section id="scr-auth" class="screen active">
+        <div class="glass" style="margin-top:20px;">
+            <div style="text-align:center; margin-bottom:20px;">
+                <div style="font-size:48px;">💳</div>
+                <h1 style="margin:8px 0 4px; font-size:28px; font-weight:1000; background:linear-gradient(135deg, #2b86ff, #a855f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">LOL Pay</h1>
+                <p style="color:rgba(234,241,255,.6); font-size:14px; font-weight:600;" id="authTitle">Вход в систему</p>
+            </div>
+            
+            <div id="authMsg" class="hidden" style="padding:10px 14px; border-radius:12px; font-size:14px; font-weight:600; margin-bottom:12px;"></div>
+            
+            <div id="loginFields">
+                <div class="space-y-12">
+                    <div>
+                        <label style="font-size:12px; color:rgba(234,241,255,.35); font-weight:700; text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:6px;">Логин</label>
+                        <input id="loginInput" class="input-field" placeholder="Введите логин" autocomplete="username">
+                    </div>
+                    <div>
+                        <label style="font-size:12px; color:rgba(234,241,255,.35); font-weight:700; text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:6px;">Пароль</label>
+                        <input id="passInput" type="password" class="input-field" placeholder="Введите пароль" autocomplete="current-password">
+                    </div>
+                    <button id="authBtn" class="btn">Войти</button>
+                    <div style="text-align:center; margin-top:12px; color:rgba(234,241,255,.5); font-size:14px;">
+                        Нет аккаунта? <span id="switchToRegister" style="color:#2b86ff; cursor:pointer; font-weight:700;">Зарегистрироваться</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="regFields" class="hidden">
+                <div class="space-y-12">
+                    <div>
+                        <label style="font-size:12px; color:rgba(234,241,255,.35); font-weight:700; text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:6px;">Никнейм</label>
+                        <input id="regNick" class="input-field" placeholder="Ваш никнейм">
+                    </div>
+                    <div>
+                        <label style="font-size:12px; color:rgba(234,241,255,.35); font-weight:700; text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:6px;">Логин</label>
+                        <input id="regLogin" class="input-field" placeholder="Придумайте логин">
+                    </div>
+                    <div>
+                        <label style="font-size:12px; color:rgba(234,241,255,.35); font-weight:700; text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:6px;">Пароль</label>
+                        <input id="regPass" type="password" class="input-field" placeholder="Минимум 4 символа">
+                    </div>
+                    <button id="regBtn" class="btn btn-success">Создать аккаунт</button>
+                    <div style="text-align:center; margin-top:12px;">
+                        <span id="switchToLogin" style="color:#2b86ff; cursor:pointer; font-weight:700; font-size:14px;">← Назад ко входу</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MAIN SCREEN ===== -->
+    <section id="scr-main" class="screen">
+        <div class="glass">
+            <div class="profile-header">
+                <img id="mainAvatar" class="avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Crect width='256' height='256' rx='50' fill='%232b86ff'/%3E%3Ccircle cx='128' cy='96' r='44' fill='rgba(255,255,255,.85)'/%3E%3Cpath d='M48 210c18-44 54-66 80-66s62 22 80 66' fill='rgba(255,255,255,.78)'/%3E%3C/svg%3E" alt="avatar">
+                <div class="profile-info">
+                    <h2 id="mainNick">...</h2>
+                    <p id="mainLogin">@login</p>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="balance-display">
+                <span>🤣</span>
+                <span id="mainBalance">0</span>
+            </div>
+            <div style="text-align:center; margin-top:-8px; margin-bottom:8px;">
+                <span class="badge badge-gold">Основной баланс</span>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="space-y-12">
+                <button id="createPaymentBtn" class="btn btn-gold">💳 Создать оплату</button>
+                <button id="payBtn" class="btn btn-blue">📱 Оплатить</button>
+                <button id="logoutBtn" class="btn btn-danger">🚪 Выйти</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CREATE PAYMENT SCREEN ===== -->
+    <section id="scr-create" class="screen">
+        <div style="max-width:440px; margin:0 auto;">
+            <button class="back-btn" id="createBackBtn">← Назад</button>
+            
+            <div class="glass mt-12">
+                <h2 style="margin:0 0 4px; font-size:22px;">💳 Создать оплату</h2>
+                <p style="color:rgba(234,241,255,.6); font-size:14px; margin:0 0 16px;">Счет действителен 5 минут</p>
+                
+                <div class="space-y-12">
+                    <div>
+                        <label style="font-size:12px; color:rgba(234,241,255,.35); font-weight:700; text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:6px;">Сумма (LOL)</label>
+                        <input id="payAmount" type="number" class="input-field" placeholder="Введите сумму" min="1">
+                    </div>
+                    
+                    <div style="background:rgba(251,191,36,.08); border-radius:12px; padding:12px; border:1px solid rgba(251,191,36,.15);">
+                        <p style="margin:0; font-size:13px; color:rgba(234,241,255,.6);">
+                            ⚠️ Вы получите <strong style="color:#fbbf24;">80%</strong> от суммы (20% комиссия)
+                        </p>
+                    </div>
+                    
+                    <div style="background:rgba(43,134,255,.08); border-radius:12px; padding:12px; border:1px solid rgba(43,134,255,.15);">
+                        <p style="margin:0; font-size:13px; color:rgba(234,241,255,.6);">
+                            📍 GPS используется для Fast Lolling<br>
+                            <span style="font-size:12px;">Разрешите геолокацию для поиска рядом</span>
+                        </p>
+                    </div>
+                    
+                    <button id="createPayBtn" class="btn btn-gold">✅ Создать счет</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PAYMENT DETAIL SCREEN ===== -->
+    <section id="scr-payment-detail" class="screen">
+        <div style="max-width:440px; margin:0 auto;">
+            <button class="back-btn" id="detailBackBtn">← Назад</button>
+            
+            <div class="glass mt-12">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                    <span style="font-size:32px;">💳</span>
+                    <div>
+                        <h3 style="margin:0; font-size:18px;">Счет создан</h3>
+                        <p style="margin:0; font-size:13px;" id="detailTimer">⏱ 5:00</p>
+                    </div>
+                </div>
+                
+                <div class="payment-info">
+                    <div class="row"><span class="label">Получатель</span><span class="value" id="detailRecipient">—</span></div>
+                    <div class="row"><span class="label">Сумма</span><span class="value" id="detailAmount">— 🤣</span></div>
+                    <div class="row"><span class="label">Вы получите</span><span class="value" style="color:#fbbf24;" id="detailReceive">— 🤣</span></div>
+                </div>
+                
+                <div style="text-align:center; margin:12px 0 4px;">
+                    <span style="font-size:12px; color:rgba(234,241,255,.4);">📷 QR-код для оплаты</span>
+                </div>
+                <div class="qr-container" id="qrContainer">
+                    <div style="color:#1a1a2e; text-align:center;">Генерация...</div>
+                </div>
+                
+                <div class="payment-code">
+                    <div class="label">🔢 Код оплаты</div>
+                    <div class="code" id="paymentCodeDisplay">000000</div>
+                    <div style="font-size:12px; color:rgba(234,241,255,.4); margin-top:4px;">Скажите код покупателю</div>
+                </div>
+                
+                <button id="cancelPaymentBtn" class="btn btn-danger mt-12">❌ Отменить счет</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PAY SCREEN (выбор способа) ===== -->
+    <section id="scr-pay" class="screen">
+        <div style="max-width:440px; margin:0 auto;">
+            <button class="back-btn" id="payBackBtn">← Назад</button>
+            
+            <div class="glass mt-12">
+                <h2 style="margin:0 0 4px;">📱 Оплата</h2>
+                <p style="color:rgba(234,241,255,.6); font-size:14px; margin:0 0 16px;">Выберите способ оплаты</p>
+                
+                <div class="space-y-12">
+                    <button id="payQrMethod" class="btn btn-blue">📷 QR-код</button>
+                    <button id="payCodeMethod" class="btn btn-purple">🔢 Цифровой код</button>
+                    <button id="payFastLollingMethod" class="btn btn-gold">📍 Fast Lolling</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PAY: QR SCAN ===== -->
+    <section id="scr-pay-qr" class="screen">
+        <div style="max-width:440px; margin:0 auto;">
+            <button class="back-btn" onclick="showScreen('scr-pay')">← Назад</button>
+            
+            <div class="glass mt-12">
+                <h2 style="margin:0 0 16px;">📷 Сканировать QR</h2>
+                <div id="qrReader" style="display:none; width:100%; aspect-ratio:1/1; border-radius:16px; overflow:hidden; background:#000;"></div>
+                <button id="scanQrBtn" class="btn btn-blue">Открыть сканер</button>
+                <button id="closeScannerBtn" class="btn btn-danger mt-12" style="display:none;">Закрыть сканер</button>
+                
+                <div id="qrScanResult" class="hidden">
+                    <div class="payment-info" id="qrPaymentInfo"></div>
+                    <button id="confirmQrPayBtn" class="btn btn-success">✅ Оплатить</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PAY: CODE INPUT ===== -->
+    <section id="scr-pay-code" class="screen">
+        <div style="max-width:440px; margin:0 auto;">
+            <button class="back-btn" onclick="showScreen('scr-pay')">← Назад</button>
+            
+            <div class="glass mt-12">
+                <h2 style="margin:0 0 16px;">🔢 Ввести код</h2>
+                <input id="codeInput" class="input-field" type="text" maxlength="6" placeholder="000000" style="font-size:28px; letter-spacing:8px; text-align:center; font-weight:700; font-family:'Courier New',monospace;">
+                <button id="checkCodeBtn" class="btn btn-blue mt-12">Проверить код</button>
+                
+                <div id="codeCheckResult" class="hidden">
+                    <div class="payment-info" id="codePaymentInfo"></div>
+                    <button id="confirmCodePayBtn" class="btn btn-success">✅ Оплатить</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PAY: FAST LOLLING (список) ===== -->
+    <section id="scr-fastlolling" class="screen">
+        <div style="max-width:440px; margin:0 auto;">
+            <button class="back-btn" onclick="showScreen('scr-pay')">← Назад</button>
+            
+            <div class="glass mt-12">
+                <h2 style="margin:0 0 4px;">📍 Fast Lolling</h2>
+                <p style="color:rgba(234,241,255,.6); font-size:14px; margin:0 0 16px;">Поиск счетов в радиусе 50 метров</p>
+                
+                <div id="fastLollingLoading" style="text-align:center; padding:40px 20px;">
+                    <div style="font-size:48px; margin-bottom:12px;">📍</div>
+                    <p style="color:rgba(234,241,255,.6);">Определяем ваше местоположение...</p>
+                </div>
+                
+                <div id="fastLollingList" class="hidden"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PAY: FAST LOLLING (оплата) ===== -->
+    <section id="scr-fastlolling-pay" class="screen">
+        <div style="max-width:440px; margin:0 auto;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+                <button class="back-btn" onclick="closeFastLollingPay()">✕</button>
+            </div>
+            
+            <div class="glass">
+                <div style="text-align:center; margin-bottom:20px;">
+                    <div style="font-size:13px; color:rgba(234,241,255,.5); margin-bottom:8px;">Счёт с кодом</div>
+                    <div id="fastPayCode" style="font-size:24px; font-weight:800; letter-spacing:4px; color:#fbbf24; font-family:'Courier New',monospace;">000000</div>
+                </div>
+                
+                <div style="text-align:center; margin:24px 0;">
+                    <div id="fastPayAmount" style="font-size:72px; font-weight:1000; background:linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">0 🤣</div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div style="font-size:13px; color:rgba(234,241,255,.5); margin-bottom:12px;">Как оплатить:</div>
+                
+                <div id="fastPaySources" style="display:flex; flex-direction:column; gap:10px; margin-bottom:16px;"></div>
+                
+                <button id="confirmFastPayBtn" class="btn btn-success" onclick="confirmFastPay()">💰 Оплатить</button>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- ===== SKRIPTS ===== -->
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+<script>
+// ============================================================
+// FIREBASE CONFIG
+// ============================================================
+const firebaseConfig = {
+    apiKey: "AIzaSyCl9xOzUawqggpwyZQupGYm67RiWT42b7A",
+    authDomain: "lol-messenger-76286.firebaseapp.com",
+    projectId: "lol-messenger-76286",
+    storageBucket: "lol-messenger-76286.firebasestorage.app",
+    messagingSenderId: "573143866457",
+    appId: "1:573143866457:web:fb7ed67ea66848e6da2548"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// ============================================================
+// ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+// ============================================================
+function randId(prefix = "u") {
+    return prefix + "_" + Math.random().toString(36).slice(2, 10) + "_" + Date.now().toString(36);
+}
+
+function generateCode() {
+    return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+const defaultAvatar = "data:image/svg+xml;base64," + btoa(`<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs><rect width="256" height="256" rx="80" fill="url(#g)"/><circle cx="128" cy="104" r="44" fill="rgba(255,255,255,.85)"/><path d="M48 218c18-44 54-66 80-66s62 22 80 66" fill="rgba(255,255,255,.78)"/></svg>`);
+
+async function sha256Hex(text) {
+    const enc = new TextEncoder();
+    const data = enc.encode(text);
+    const hash = await crypto.subtle.digest("SHA-256", data);
+    const bytes = Array.from(new Uint8Array(hash));
+    return bytes.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+function showToast(message, type = 'info') {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.className = 'toast' + (type === 'success' ? ' success' : type === 'error' ? ' error' : '');
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
+}
+
+// ============================================================
+// localStorage (безопасный)
+// ============================================================
+const memoryStorage = {};
+let useLocalStorage = true;
+try {
+    localStorage.setItem('test', 'test');
+    localStorage.removeItem('test');
+} catch (e) {
+    useLocalStorage = false;
+}
+const safeStorage = {
+    set: (k, v) => { try { useLocalStorage ? localStorage.setItem(k, v) : (memoryStorage[k] = v); } catch(e) { memoryStorage[k] = v; } },
+    get: (k) => { try { return useLocalStorage ? localStorage.getItem(k) : (memoryStorage[k] || null); } catch(e) { return memoryStorage[k] || null; } },
+    del: (k) => { try { useLocalStorage ? localStorage.removeItem(k) : delete memoryStorage[k]; } catch(e) { delete memoryStorage[k]; } }
+};
+
+// ============================================================
+// СЕССИЯ
+// ============================================================
+function saveSession(data) {
+    safeStorage.set("lolpay_session", JSON.stringify({ uid: data.uid, login: data.login, savedAt: Date.now() }));
+}
+function loadSession() {
+    try {
+        const s = safeStorage.get("lolpay_session");
+        if (!s) return null;
+        const p = JSON.parse(s);
+        if (p && p.uid && p.login) return { uid: p.uid, login: p.login };
+        return null;
+    } catch (e) { return null; }
+}
+function clearSession() {
+    safeStorage.del("lolpay_session");
+}
+
+// ============================================================
+// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+// ============================================================
+let session = null;
+let me = null;
+let currentPaymentId = null;
+let paymentTimer = null;
+let paymentExpiry = null;
+let paymentDeleteTimer = null;
+let timerInterval = null;
+let html5QrCode = null;
+let isScannerOpen = false;
+let fastPaySelectedPayment = null;
+let fastPaySelectedSource = null;
+let allSources = [];
+
+// ============================================================
+// АВТОРИЗАЦИЯ
+// ============================================================
+async function findUserByLogin(login) {
+    const snap = await db.collection("users").where("login", "==", login).limit(1).get();
+    if (snap.empty) return null;
+    const d = snap.docs[0];
+    return { uid: d.id, data: d.data() };
+}
+
+async function loadUserData(uid) {
+    const snap = await db.collection("users").doc(uid).get();
+    if (!snap.exists) return null;
+    return { uid: snap.id, ...snap.data() };
+}
+
+async function performLogin(login, pass) {
+    const found = await findUserByLogin(login);
+    if (!found) throw new Error("Аккаунт не найден");
+    const { uid, data } = found;
+    const calc = await sha256Hex(`${login}:${pass}:${data.salt}`);
+    if (calc !== data.passwordHash) throw new Error("Неверный пароль");
+    const sessionData = { uid, login };
+    saveSession(sessionData);
+    const userData = await loadUserData(uid);
+    if (!userData) throw new Error("Ошибка профиля");
+    return { session: sessionData, user: userData };
+}
+
+async function performRegister(login, pass, nick) {
+    const exists = await findUserByLogin(login);
+    if (exists) throw new Error("Логин занят");
+    const uid = randId("u");
+    const salt = randId("s");
+    const passwordHash = await sha256Hex(`${login}:${pass}:${salt}`);
+    await db.collection("users").doc(uid).set({
+        login: login,
+        nick: nick || login,
+        avatar: defaultAvatar,
+        salt: salt,
+        passwordHash: passwordHash,
+        balance: 100,
+        createdAt: Date.now()
+    });
+    const sessionData = { uid, login };
+    saveSession(sessionData);
+    const userData = await loadUserData(uid);
+    if (!userData) throw new Error("Ошибка профиля");
+    return { session: sessionData, user: userData };
+}
+
+// ============================================================
+// UI: АВТОРИЗАЦИЯ
+// ============================================================
+let isRegisterMode = false;
+
+document.getElementById('authBtn').addEventListener('click', async () => {
+    const msgEl = document.getElementById('authMsg');
+    msgEl.classList.add('hidden');
+    const login = document.getElementById('loginInput').value.trim();
+    const pass = document.getElementById('passInput').value;
+    
+    if (!login || !pass) {
+        msgEl.className = 'err';
+        msgEl.textContent = 'Заполните логин и пароль';
+        msgEl.classList.remove('hidden');
+        return;
+    }
+    
+    try {
+        const result = await performLogin(login, pass);
+        session = result.session;
+        me = result.user;
+        showToast('✅ Добро пожаловать, ' + me.nick + '!', 'success');
+        renderMainScreen();
+        showScreen('scr-main');
+    } catch (e) {
+        msgEl.className = 'err';
+        msgEl.textContent = '❌ ' + e.message;
+        msgEl.classList.remove('hidden');
+    }
+});
+
+document.getElementById('regBtn').addEventListener('click', async () => {
+    const msgEl = document.getElementById('authMsg');
+    msgEl.classList.add('hidden');
+    const login = document.getElementById('regLogin').value.trim();
+    const pass = document.getElementById('regPass').value;
+    const nick = document.getElementById('regNick').value.trim();
+    
+    if (!login || !pass || !nick) {
+        msgEl.className = 'err';
+        msgEl.textContent = 'Заполните все поля';
+        msgEl.classList.remove('hidden');
+        return;
+    }
+    if (pass.length < 4) {
+        msgEl.className = 'err';
+        msgEl.textContent = 'Пароль минимум 4 символа';
+        msgEl.classList.remove('hidden');
+        return;
+    }
+    
+    try {
+        const result = await performRegister(login, pass, nick);
+        session = result.session;
+        me = result.user;
+        showToast('✅ Аккаунт создан!', 'success');
+        renderMainScreen();
+        showScreen('scr-main');
+    } catch (e) {
+        msgEl.className = 'err';
+        msgEl.textContent = '❌ ' + e.message;
+        msgEl.classList.remove('hidden');
+    }
+});
+
+document.getElementById('switchToRegister').addEventListener('click', () => {
+    isRegisterMode = true;
+    document.getElementById('regFields').classList.remove('hidden');
+    document.getElementById('loginFields').classList.add('hidden');
+    document.getElementById('authTitle').textContent = 'Регистрация';
+});
+
+document.getElementById('switchToLogin').addEventListener('click', () => {
+    isRegisterMode = false;
+    document.getElementById('regFields').classList.add('hidden');
+    document.getElementById('loginFields').classList.remove('hidden');
+    document.getElementById('authTitle').textContent = 'Вход в систему';
+});
+
+// ============================================================
+// ГЛАВНЫЙ ЭКРАН
+// ============================================================
+function renderMainScreen() {
+    if (!me) return;
+    document.getElementById('mainAvatar').src = me.avatar || defaultAvatar;
+    document.getElementById('mainNick').textContent = me.nick || 'Пользователь';
+    document.getElementById('mainLogin').textContent = '@' + (me.login || 'user');
+    document.getElementById('mainBalance').textContent = me.balance || 0;
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    if (confirm('Выйти?')) {
+        clearSession();
+        session = null;
+        me = null;
+        showScreen('scr-auth');
+    }
+});
+
+// ============================================================
+// СОЗДАНИЕ ОПЛАТЫ (С GPS)
+// ============================================================
+document.getElementById('createPaymentBtn').addEventListener('click', () => {
+    document.getElementById('payAmount').value = '';
+    showScreen('scr-create');
+});
+
+document.getElementById('createBackBtn').addEventListener('click', () => {
+    showScreen('scr-main');
+});
+
+document.getElementById('createPayBtn').addEventListener('click', async () => {
+    const amount = parseInt(document.getElementById('payAmount').value);
+    
+    if (!amount || amount < 1) {
+        showToast('❌ Введите корректную сумму', 'error');
+        return;
+    }
+    
+    // Пробуем получить GPS (не обязательно)
+    let lat = null, lng = null;
+    try {
+        const pos = await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+                enableHighAccuracy: true, timeout: 5000, maximumAge: 0
+            });
+        });
+        lat = Math.round(pos.coords.latitude * 10000) / 10000;
+        lng = Math.round(pos.coords.longitude * 10000) / 10000;
+        console.log('✅ GPS получен');
+    } catch (e) {
+        console.log('⚠️ GPS не разрешён');
+    }
+    
+    const code = generateCode();
+    const paymentId = randId('pay');
+    const expiresAt = Date.now() + 5 * 60 * 1000;
+    
+    const paymentData = {
+        id: paymentId,
+        fromUid: me.uid,
+        fromNick: me.nick,
+        toUid: me.uid,
+        toNick: me.nick,
+        amount: amount,
+        fee: Math.round(amount * 0.2),
+        recipientAmount: Math.round(amount * 0.8),
+        code: code,
+        createdAt: Date.now(),
+        expiresAt: expiresAt,
+        status: 'pending',
+        paidBy: null,
+        paidAt: null
+    };
+    
+    // SHA-256 для QR
+    const hashData = { id: paymentId, amount: amount, recipient: me.nick, code: code, timestamp: Date.now() };
+    paymentData.qrHash = await sha256Hex(JSON.stringify(hashData));
+    
+    if (lat !== null && lng !== null) {
+        paymentData.lat = lat;
+        paymentData.lng = lng;
+    }
+    
+    await db.collection('payments').doc(paymentId).set(paymentData);
+    
+    currentPaymentId = paymentId;
+    paymentExpiry = expiresAt;
+    startPaymentTimer(paymentId, expiresAt);
+    
+    showToast('✅ Счет создан!', 'success');
+    showPaymentDetail(paymentId, paymentData.qrHash);
+});
+
+// ============================================================
+// ТАЙМЕР (5 минут → удаление)
+// ============================================================
+function startPaymentTimer(paymentId, expiresAt) {
+    if (paymentDeleteTimer) clearTimeout(paymentDeleteTimer);
+    if (timerInterval) clearInterval(timerInterval);
+    
+    const timeLeft = expiresAt - Date.now();
+    if (timeLeft <= 0) {
+        deletePayment(paymentId);
+        return;
+    }
+    
+    paymentDeleteTimer = setTimeout(async () => {
+        await deletePayment(paymentId);
+    }, timeLeft);
+}
+
+function updatePaymentTimer() {
+    if (!paymentExpiry) return;
+    const remaining = Math.max(0, paymentExpiry - Date.now());
+    const timerEl = document.getElementById('detailTimer');
+    if (!timerEl) return;
+    
+    if (remaining <= 0) {
+        timerEl.textContent = '⏱ 00:00';
+        timerEl.className = 'timer danger';
+        return;
+    }
+    
+    const totalSec = Math.floor(remaining / 1000);
+    const min = String(Math.floor(totalSec / 60)).padStart(2, '0');
+    const sec = String(totalSec % 60).padStart(2, '0');
+    timerEl.textContent = '⏱ ' + min + ':' + sec;
+    timerEl.className = 'timer' + (remaining < 60000 ? ' danger' : remaining < 120000 ? ' warning' : '');
+}
+
+async function deletePayment(paymentId) {
+    try {
+        const docRef = db.collection('payments').doc(paymentId);
+        const doc = await docRef.get();
+        if (!doc.exists) return;
+        if (doc.data().status === 'paid') return;
+        
+        await docRef.delete();
+        console.log('🗑️ Счёт удалён');
+        
+        if (currentPaymentId === paymentId) {
+            showToast('⏰ Срок действия счёта истёк', 'error');
+            if (timerInterval) clearInterval(timerInterval);
+            setTimeout(() => {
+                showScreen('scr-main');
+                renderMainScreen();
+            }, 1500);
+        }
+    } catch (e) {
+        console.error('Ошибка удаления:', e);
+    }
+}
+
+// ============================================================
+// ДЕТАЛИ СЧЁТА
+// ============================================================
+async function showPaymentDetail(paymentId, qrHash) {
+    const doc = await db.collection('payments').doc(paymentId).get();
+    if (!doc.exists) return;
+    const data = doc.data();
+    
+    document.getElementById('detailRecipient').textContent = data.toNick;
+    document.getElementById('detailAmount').textContent = data.amount + ' 🤣';
+    document.getElementById('detailReceive').textContent = data.recipientAmount + ' 🤣 (80%)';
+    document.getElementById('paymentCodeDisplay').textContent = data.code || '000000';
+    
+    const qrContainer = document.getElementById('qrContainer');
+    qrContainer.innerHTML = '';
+    const qrText = 'lolpay://pay?hash=' + (qrHash || data.qrHash);
+    
+    try {
+        new QRCode(qrContainer, {
+            text: qrText, width: 200, height: 200,
+            colorDark: '#1a1a2e', colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    } catch (e) {
+        qrContainer.innerHTML = '<div style="color:#1a1a2e;">Ошибка QR</div>';
+    }
+    
+    updatePaymentTimer();
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(updatePaymentTimer, 1000);
+    
+    const unsub = db.collection('payments').doc(paymentId).onSnapshot((snap) => {
+        if (!snap.exists) {
+            if (timerInterval) clearInterval(timerInterval);
+            showScreen('scr-main');
+            return;
+        }
+        const pData = snap.data();
+        if (pData.status === 'paid') {
+            if (timerInterval) clearInterval(timerInterval);
+            if (paymentDeleteTimer) clearTimeout(paymentDeleteTimer);
+            showPaymentAnimation(pData.fromNick, pData.toNick, pData.amount);
+            setTimeout(() => {
+                showScreen('scr-main');
+                renderMainScreen();
+            }, 2000);
+        }
+    });
+    
+    showScreen('scr-payment-detail');
+    
+    document.getElementById('detailBackBtn').onclick = () => {
+        if (timerInterval) clearInterval(timerInterval);
+        if (paymentDeleteTimer) clearTimeout(paymentDeleteTimer);
+        unsub();
+        showScreen('scr-main');
+    };
+    
+    document.getElementById('cancelPaymentBtn').onclick = async () => {
+        if (!confirm('Отменить счёт?')) return;
+        try {
+            if (paymentDeleteTimer) clearTimeout(paymentDeleteTimer);
+            await db.collection('payments').doc(paymentId).delete();
+            showToast('❌ Счёт отменён', 'error');
+            if (timerInterval) clearInterval(timerInterval);
+            unsub();
+            showScreen('scr-main');
+        } catch (e) {
+            showToast('Ошибка: ' + e.message, 'error');
+        }
+    };
+}
+
+// ============================================================
+// ОПЛАТА: ГЛАВНЫЙ ЭКРАН
+// ============================================================
+document.getElementById('payBtn').addEventListener('click', () => {
+    showScreen('scr-pay');
+});
+
+document.getElementById('payBackBtn').addEventListener('click', () => {
+    showScreen('scr-main');
+});
+
+// QR
+document.getElementById('payQrMethod').addEventListener('click', () => {
+    showScreen('scr-pay-qr');
+});
+
+// Код
+document.getElementById('payCodeMethod').addEventListener('click', () => {
+    document.getElementById('codeInput').value = '';
+    document.getElementById('codeCheckResult').classList.add('hidden');
+    showScreen('scr-pay-code');
+});
+
+// Fast Lolling
+document.getElementById('payFastLollingMethod').addEventListener('click', () => {
+    openFastLolling();
+});
+
+// ============================================================
+// QR-СКАНЕР
+// ============================================================
+document.getElementById('scanQrBtn').addEventListener('click', async () => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        showToast('❌ Камера не поддерживается', 'error');
+        return;
+    }
+    
+    try {
+        const readerContainer = document.getElementById('qrReader');
+        readerContainer.style.display = 'block';
+        document.getElementById('scanQrBtn').style.display = 'none';
+        document.getElementById('closeScannerBtn').style.display = 'block';
+        
+        if (html5QrCode) {
+            try { await html5QrCode.stop(); await html5QrCode.clear(); } catch(e) {}
+        }
+        
+        html5QrCode = new Html5Qrcode('qrReader');
+        isScannerOpen = true;
+        
+        await html5QrCode.start(
+            { facingMode: 'environment' },
+            { fps: 15, qrbox: { width: 250, height: 250 } },
+            onQrScanSuccess,
+            () => {}
+        );
+        
+        showToast('📷 Наведите на QR-код', 'success');
+    } catch (err) {
+        showToast('❌ Ошибка камеры: ' + err.message, 'error');
+    }
+});
+
+async function onQrScanSuccess(decodedText) {
+    if (html5QrCode && isScannerOpen) {
+        try { await html5QrCode.stop(); await html5QrCode.clear(); } catch(e) {}
+        isScannerOpen = false;
+    }
+    document.getElementById('qrReader').style.display = 'none';
+    document.getElementById('closeScannerBtn').style.display = 'none';
+    document.getElementById('scanQrBtn').style.display = 'block';
+    
+    try {
+        let qrHash = decodedText.replace('lolpay://pay?hash=', '');
+        
+        const snap = await db.collection('payments')
+            .where('qrHash', '==', qrHash)
+            .limit(1)
+            .get();
+        
+        if (snap.empty) {
+            showToast('❌ Счёт не найден', 'error');
+            return;
+        }
+        
+        const doc = snap.docs[0];
+        const data = doc.data();
+        
+        if (data.status !== 'pending' || data.expiresAt < Date.now()) {
+            showToast('❌ Счёт недействителен', 'error');
+            return;
+        }
+        
+        if (data.fromUid === me.uid) {
+            showToast('❌ Это ваш счёт', 'error');
+            return;
+        }
+        
+        showQrPaymentInfo({ id: doc.id, ...data });
+    } catch (e) {
+        showToast('❌ Ошибка: ' + e.message, 'error');
+    }
+}
+
+function showQrPaymentInfo(data) {
+    document.getElementById('qrScanResult').classList.remove('hidden');
+    document.getElementById('qrPaymentInfo').innerHTML = `
+        <div class="row"><span class="label">Продавец</span><span class="value">${data.fromNick}</span></div>
+        <div class="row"><span class="label">Сумма</span><span class="value">${data.amount} 🤣</span></div>
+        <div class="row"><span class="label">Вы получите</span><span class="value" style="color:#fbbf24;">${data.recipientAmount} 🤣</span></div>
+    `;
+    document.getElementById('confirmQrPayBtn').onclick = () => openPaymentFromSource(data);
+}
+
+document.getElementById('closeScannerBtn').addEventListener('click', async () => {
+    if (html5QrCode && isScannerOpen) {
+        try { await html5QrCode.stop(); await html5QrCode.clear(); } catch(e) {}
+        isScannerOpen = false;
+    }
+    document.getElementById('qrReader').style.display = 'none';
+    document.getElementById('closeScannerBtn').style.display = 'none';
+    document.getElementById('scanQrBtn').style.display = 'block';
+});
+
+// ============================================================
+// ЦИФРОВОЙ КОД
+// ============================================================
+document.getElementById('checkCodeBtn').addEventListener('click', async () => {
+    const code = document.getElementById('codeInput').value.trim();
+    
+    if (!code || code.length !== 6) {
+        showToast('Введите 6-значный код', 'error');
+        return;
+    }
+    
+    try {
+        const snap = await db.collection('payments')
+            .where('code', '==', code)
+            .limit(1)
+            .get();
+        
+        if (snap.empty) {
+            showToast('❌ Неверный код', 'error');
+            return;
+        }
+        
+        const doc = snap.docs[0];
+        const data = doc.data();
+        
+        if (data.status !== 'pending' || data.expiresAt < Date.now()) {
+            showToast('❌ Счёт недействителен', 'error');
+            return;
+        }
+        
+        if (data.fromUid === me.uid) {
+            showToast('❌ Это ваш счёт', 'error');
+            return;
+        }
+        
+        document.getElementById('codeCheckResult').classList.remove('hidden');
+        document.getElementById('codePaymentInfo').innerHTML = `
+            <div class="row"><span class="label">Продавец</span><span class="value">${data.fromNick}</span></div>
+            <div class="row"><span class="label">Сумма</span><span class="value">${data.amount} 🤣</span></div>
+        `;
+        document.getElementById('confirmCodePayBtn').onclick = () => openPaymentFromSource({ id: doc.id, ...data });
+    } catch (e) {
+        showToast('❌ Ошибка: ' + e.message, 'error');
+    }
+});
+
+document.getElementById('codeInput').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g, '');
+    if (this.value.length > 6) this.value = this.value.slice(0, 6);
+    if (this.value.length === 6) document.getElementById('checkCodeBtn').click();
+});
+
+// ============================================================
+// FAST LOLLING
+// ============================================================
+function getGPS() {
+    return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) reject(new Error('GPS не поддерживается'));
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true, timeout: 10000, maximumAge: 0
+        });
+    });
+}
+
+function calculateDistance(lat1, lng1, lat2, lng2) {
+    const R = 6371000;
+    const φ1 = lat1 * Math.PI / 180;
+    const φ2 = lat2 * Math.PI / 180;
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+async function openFastLolling() {
+    showScreen('scr-fastlolling');
+    
+    const loadingEl = document.getElementById('fastLollingLoading');
+    const listEl = document.getElementById('fastLollingList');
+    
+    loadingEl.classList.remove('hidden');
+    listEl.classList.add('hidden');
+    loadingEl.innerHTML = '<div style="font-size:48px; margin-bottom:12px;">📍</div><p style="color:rgba(234,241,255,.6);">Определяем ваше местоположение...</p>';
+    
+    try {
+        const pos = await getGPS();
+        const myLat = pos.coords.latitude;
+        const myLng = pos.coords.longitude;
+        
+        const snap = await db.collection('payments').get();
+        
+        const nearby = [];
+        const now = Date.now();
+        
+        snap.forEach(doc => {
+            const data = doc.data();
+            if (data.fromUid === me.uid) return;
+            if (data.expiresAt < now) return;
+            if (data.status !== 'pending') return;
+            if (!data.lat || !data.lng) return;
+            
+            const distance = calculateDistance(myLat, myLng, data.lat, data.lng);
+            if (distance <= 50) {
+                nearby.push({ id: doc.id, ...data, distance: Math.round(distance) });
+            }
+        });
+        
+        if (nearby.length === 0) {
+            loadingEl.innerHTML = '<div style="font-size:48px; margin-bottom:12px;">😔</div><p style="color:rgba(234,241,255,.6);">Рядом нет активных счетов</p>';
+            return;
+        }
+        
+        nearby.sort((a, b) => a.distance - b.distance);
+        loadingEl.classList.add('hidden');
+        listEl.classList.remove('hidden');
+        
+        let html = '<div style="display:flex; flex-direction:column; gap:12px;">';
+        nearby.forEach((p, idx) => {
+            html += `
+                <div class="fast-payment-card">
+                    <div class="code-label">💳 Счёт с кодом</div>
+                    <div class="code-value">${p.code}</div>
+                    <div class="amount-value">${p.amount} 🤣</div>
+                    <div class="distance">📍 ${p.distance} метров</div>
+                    <button class="btn btn-success" style="width:100%; margin-top:12px;" onclick="selectFastPayment(${idx})">
+                        Выбрать счёт
+                    </button>
+                </div>
+            `;
+        });
+        html += '</div>';
+        listEl.innerHTML = html;
+        
+        window._fastPayments = nearby;
+    } catch (err) {
+        console.error('GPS ошибка:', err);
+        loadingEl.innerHTML = `
+            <div style="font-size:48px; margin-bottom:12px;">❌</div>
+            <p style="color:#ef4444; font-weight:700;">Разрешите доступ к геолокации</p>
+            <p style="color:rgba(234,241,255,.5); font-size:13px;">Fast Lolling работает только с GPS</p>
+        `;
+    }
+}
+
+async function selectFastPayment(idx) {
+    const payment = window._fastPayments[idx];
+    fastPaySelectedPayment = payment;
+    openPaymentFromSource(payment);
+}
+
+function closeFastLollingPay() {
+    showScreen('scr-fastlolling');
+}
+
+// ============================================================
+// ОПЛАТА: ВЫБОР ИСТОЧНИКА
+// ============================================================
+async function openPaymentFromSource(payment) {
+    fastPaySelectedPayment = payment;
+    fastPaySelectedSource = null;
+    allSources = [];
+    
+    document.getElementById('fastPayCode').textContent = payment.code;
+    document.getElementById('fastPayAmount').textContent = payment.amount + ' 🤣';
+    
+    const sourcesEl = document.getElementById('fastPaySources');
+    sourcesEl.innerHTML = '<div style="text-align:center; padding:20px; color:rgba(234,241,255,.5);">Загрузка источников...</div>';
+    
+    showScreen('scr-fastlolling-pay');
+    
+    // Загружаем источники
+    allSources = [];
+    
+    // Основной баланс
+    allSources.push({
+        type: 'main',
+        name: '💳 Основной баланс',
+        balance: me.balance || 0
+    });
+    
+    // Кошельки
+    try {
+        const walletsSnap = await db.collection('wallets')
+            .where('ownerId', '==', me.uid)
+            .get();
+        
+        walletsSnap.forEach(doc => {
+            const data = doc.data();
+            const last4 = data.walletNumber.slice(-4);
+            allSources.push({
+                type: 'wallet',
+                id: doc.id,
+                name: `👛 •••• ${last4}`,
+                balance: data.balance || 0
+            });
+        });
+    } catch (e) {
+        console.warn('Ошибка загрузки кошельков:', e);
+    }
+    
+    // Сортировка: сначала с достаточным балансом, потом по убыванию
+    allSources.sort((a, b) => {
+        const aEnough = a.balance >= payment.amount;
+        const bEnough = b.balance >= payment.amount;
+        if (aEnough !== bEnough) return bEnough ? 1 : -1;
+        return b.balance - a.balance;
+    });
+    
+    // Автовыбор
+    fastPaySelectedSource = allSources.find(s => s.balance >= payment.amount) || allSources[0];
+    
+    renderSources();
+}
+
+function renderSources() {
+    const sourcesEl = document.getElementById('fastPaySources');
+    const amount = fastPaySelectedPayment.amount;
+    const top2 = allSources.slice(0, 2);
+    const rest = allSources.slice(2);
+    
+    let html = '';
+    
+    top2.forEach((s, idx) => {
+        const isSelected = fastPaySelectedSource === s;
+        const enough = s.balance >= amount;
+        
+        html += `
+            <div class="source-card ${isSelected ? 'selected' : ''}" onclick="selectSource(${idx})">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div class="source-name">${s.name}</div>
+                        <div class="source-balance ${enough ? 'enough' : 'not-enough'}">
+                            ${s.balance} 🤣
+                        </div>
+                    </div>
+                    ${isSelected ? '<div style="font-size:20px;">✅</div>' : ''}
+                </div>
+            </div>
+        `;
+    });
+    
+    if (rest.length > 0) {
+        html += `
+            <div class="source-card" style="border-style:dashed; text-align:center; color:rgba(234,241,255,.6); font-weight:600;" onclick="showAllSources()">
+                📋 Ещё (${rest.length})
+            </div>
+        `;
+    }
+    
+    sourcesEl.innerHTML = html;
+}
+
+function selectSource(idx) {
+    const top2 = allSources.slice(0, 2);
+    fastPaySelectedSource = top2[idx];
+    renderSources();
+}
+
+function showAllSources() {
+    const amount = fastPaySelectedPayment.amount;
+    let html = '<div style="font-size:13px; color:rgba(234,241,255,.5); margin-bottom:12px;">Все источники:</div>';
+    
+    allSources.forEach((s, idx) => {
+        const isSelected = fastPaySelectedSource === s;
+        const enough = s.balance >= amount;
+        
+        html += `
+            <div class="source-card ${isSelected ? 'selected' : ''}" style="margin-bottom:8px;" onclick="selectFromAll(${idx})">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div class="source-name">${s.name}</div>
+                        <div class="source-balance ${enough ? 'enough' : 'not-enough'}">
+                            ${s.balance} 🤣
+                        </div>
+                    </div>
+                    ${isSelected ? '<div style="font-size:20px;">✅</div>' : ''}
+                </div>
+            </div>
+        `;
+    });
+    
+    html += '<button class="btn btn-blue" style="margin-top:12px;" onclick="renderSources()">← Назад</button>';
+    document.getElementById('fastPaySources').innerHTML = html;
+}
+
+function selectFromAll(idx) {
+    fastPaySelectedSource = allSources[idx];
+    renderSources();
+}
+
+// ============================================================
+// ПОДТВЕРЖДЕНИЕ ОПЛАТЫ
+// ============================================================
+async function confirmFastPay() {
+    if (!fastPaySelectedPayment || !fastPaySelectedSource) {
+        showToast('❌ Выберите способ оплаты', 'error');
+        return;
+    }
+    
+    const payment = fastPaySelectedPayment;
+    const source = fastPaySelectedSource;
+    
+    if (source.balance < payment.amount) {
+        showToast('❌ Недостаточно средств на выбранном источнике', 'error');
+        return;
+    }
+    
+    try {
+        await db.runTransaction(async (transaction) => {
+            // Читаем источник
+            let sourceRef, sourceBalance;
+            if (source.type === 'main') {
+                sourceRef = db.collection('users').doc(me.uid);
+                const snap = await transaction.get(sourceRef);
+                sourceBalance = snap.data().balance || 0;
+            } else {
+                sourceRef = db.collection('wallets').doc(source.id);
+                const snap = await transaction.get(sourceRef);
+                sourceBalance = snap.data().balance || 0;
+            }
+            
+            if (sourceBalance < payment.amount) throw new Error('Недостаточно средств');
+            
+            // Читаем продавца
+            const sellerRef = db.collection('users').doc(payment.fromUid);
+            const sellerSnap = await transaction.get(sellerRef);
+            const sellerBalance = sellerSnap.data()?.balance || 0;
+            
+            // Проверяем счёт
+            const paymentRef = db.collection('payments').doc(payment.id);
+            const paymentSnap = await transaction.get(paymentRef);
+            if (!paymentSnap.exists) throw new Error('Счёт не найден');
+            
+            const paymentData = paymentSnap.data();
+            if (paymentData.status !== 'pending') throw new Error('Счёт уже оплачен');
+            if (paymentData.expiresAt < Date.now()) throw new Error('Срок истёк');
+            
+            // ЗАПИСИ
+            transaction.update(sourceRef, { balance: sourceBalance - payment.amount });
+            transaction.update(sellerRef, { balance: sellerBalance + paymentData.recipientAmount });
+            transaction.delete(paymentRef);  // 🗑️ Удаляем счёт
+        });
+        
+        // Обновляем локально
+        if (source.type === 'main') {
+            me.balance -= payment.amount;
+        }
+        
+        // Анимация
+        showPaymentAnimation(me.nick, payment.fromNick, payment.amount);
+        showToast('✅ Оплата прошла успешно!', 'success');
+        
+        setTimeout(() => {
+            showScreen('scr-main');
+            renderMainScreen();
+        }, 2000);
+        
+    } catch (e) {
+        showToast('❌ Ошибка: ' + e.message, 'error');
+    }
+}
+
+// ============================================================
+// АНИМАЦИЯ ОПЛАТЫ
+// ============================================================
+function showPaymentAnimation(from, to, amount) {
+    const existing = document.querySelector('.payment-animation');
+    if (existing) existing.remove();
+    
+    const div = document.createElement('div');
+    div.className = 'payment-animation';
+    div.innerHTML = `
+        <div class="check">✅</div>
+        <div class="amount">${amount} 🤣</div>
+        <div class="from">${from} → ${to}</div>
+        <p style="color:rgba(234,241,255,.6); margin-top:12px; font-size:14px;">Оплата получена!</p>
+    `;
+    document.body.appendChild(div);
+    
+    setTimeout(() => div.remove(), 2500);
+}
+
+// ============================================================
+// АВТООЧИСТКА
+// ============================================================
+async function cleanupExpiredPayments() {
+    try {
+        const snap = await db.collection('payments').get();
+        if (snap.empty) return;
+        
+        const now = Date.now();
+        const batch = db.batch();
+        let count = 0;
+        
+        snap.forEach(doc => {
+            const data = doc.data();
+            if (data.expiresAt < now && data.status === 'pending') {
+                batch.delete(doc.ref);
+                count++;
+            }
+        });
+        
+        if (count > 0) {
+            await batch.commit();
+            console.log('🧹 Удалено ' + count + ' просроченных');
+        }
+    } catch (e) {
+        console.error('Ошибка очистки:', e);
+    }
+}
+
+setInterval(cleanupExpiredPayments, 10000);
+setTimeout(cleanupExpiredPayments, 3000);
+
+// ============================================================
+// ИНИЦИАЛИЗАЦИЯ
+// ============================================================
+(async () => {
+    const saved = loadSession();
+    if (saved && saved.uid) {
+        try {
+            me = await loadUserData(saved.uid);
+            if (me) {
+                session = saved;
+                renderMainScreen();
+                showScreen('scr-main');
+                return;
+            }
+        } catch (e) {
+            clearSession();
+        }
+    }
+    showScreen('scr-auth');
+})();
+
+console.log('💳 LOL Pay + Fast Lolling запущен!');
+</script>
+</body>
+</html>
