@@ -40,7 +40,6 @@
         .btn {
             background: rgba(40,40,50,.85);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 2px solid transparent;
             background-image: linear-gradient(rgba(40,40,50,.85), rgba(40,40,50,.85)), linear-gradient(120deg,#5B8CFF,#8A5BFF,#5B8CFF);
             background-origin: border-box;
@@ -87,8 +86,6 @@
         .input-field::placeholder { color: rgba(234,241,255,.35); }
         
         .avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,.08); flex-shrink: 0; }
-        .avatar.small { width: 40px; height: 40px; }
-        .avatar.big { width: 80px; height: 80px; }
         
         .balance-display {
             display: flex;
@@ -103,12 +100,7 @@
             -webkit-text-fill-color: transparent;
         }
         
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
+        .profile-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
         .profile-info h2 { margin: 0; font-size: 20px; font-weight: 800; }
         .profile-info p { margin: 4px 0 0; color: rgba(234,241,255,.6); font-size: 14px; }
         
@@ -124,30 +116,12 @@
             background: none;
             border: none;
             font-family: 'Comfortaa', sans-serif;
-            color: #eaf1ff;
-        }
-        .back-btn:hover { color: #2b86ff; }
-        
-        .divider {
-            height: 1px;
-            background: rgba(255,255,255,.08);
-            margin: 16px 0;
         }
         
+        .divider { height: 1px; background: rgba(255,255,255,.08); margin: 16px 0; }
         .space-y-12 > * + * { margin-top: 12px; }
-        .space-y-8 > * + * { margin-top: 8px; }
         .hidden { display: none !important; }
-        .text-center { text-align: center; }
-        .text-muted { color: rgba(234,241,255,.6); font-size: 14px; }
-        .text-sm { font-size: 13px; }
         .mt-12 { margin-top: 12px; }
-        .mt-20 { margin-top: 20px; }
-        .gap-10 { gap: 10px; }
-        .flex { display: flex; }
-        .flex-col { flex-direction: column; }
-        .items-center { align-items: center; }
-        .justify-between { justify-content: space-between; }
-        .flex-1 { flex: 1; }
         
         .badge {
             display: inline-block;
@@ -156,10 +130,7 @@
             font-size: 12px;
             font-weight: 700;
         }
-        .badge-blue { background: rgba(43,134,255,.2); color: #2b86ff; }
         .badge-gold { background: rgba(251,191,36,.2); color: #fbbf24; }
-        .badge-green { background: rgba(34,197,94,.2); color: #22c55e; }
-        .badge-purple { background: rgba(168,85,247,.2); color: #a855f7; }
         
         .toast {
             position: fixed;
@@ -174,11 +145,10 @@
             color: white;
             font-size: 14px;
             z-index: 1000;
-            animation: slideUp 0.3s ease;
-            box-shadow: 0 18px 45px rgba(0,0,0,.55);
             font-weight: 600;
             max-width: 90%;
             text-align: center;
+            animation: slideUp 0.3s ease;
         }
         .toast.success { border-color: #22c55e; background: rgba(34,197,94,.15); }
         .toast.error { border-color: #ef4444; background: rgba(239,68,68,.15); }
@@ -262,33 +232,6 @@
         .timer.warning { color: #fbbf24; }
         .timer.danger { color: #ef4444; }
         
-        .source-card {
-            background: rgba(255,255,255,.05);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            padding: 12px;
-            cursor: pointer;
-            transition: .2s;
-        }
-        .source-card.selected {
-            background: rgba(43,134,255,.2);
-            border-color: #2b86ff;
-        }
-        .source-card.disabled {
-            opacity: 0.5;
-        }
-        .source-card .source-name {
-            font-weight: 700;
-            font-size: 15px;
-            margin-bottom: 4px;
-        }
-        .source-card .source-balance {
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .source-card .source-balance.enough { color: #22c55e; }
-        .source-card .source-balance.not-enough { color: #ef4444; }
-        
         .fast-payment-card {
             background: rgba(18,24,38,.85);
             border: 1px solid rgba(255,255,255,.08);
@@ -301,36 +244,88 @@
         .fast-payment-card .amount-value { font-size: 24px; font-weight: 1000; color: #fbbf24; }
         .fast-payment-card .distance { font-size: 12px; color: rgba(234,241,255,.5); margin-top: 4px; }
         
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 10px; }
+        .source-card {
+            background: rgba(255,255,255,.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+            transition: .2s;
+        }
+        .source-card.selected {
+            background: rgba(43,134,255,.2);
+            border-color: #2b86ff;
+        }
+        .source-card .source-name { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+        .source-card .source-balance { font-size: 13px; font-weight: 600; }
+        .source-card .source-balance.enough { color: #22c55e; }
+        .source-card .source-balance.not-enough { color: #ef4444; }
+        
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            background: rgba(40,40,50,.5);
+            border-radius: 16px;
+            padding: 4px;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 12px;
+            background: transparent;
+            color: rgba(234,241,255,.5);
+            font-family: 'Comfortaa', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: .2s;
+        }
+        .tab-btn.active { background: rgba(43,134,255,.2); color: #eaf1ff; }
+        
+        .wallet-card {
+            background: rgba(18,24,38,.85);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: .2s;
+        }
+        .wallet-card:hover { border-color: rgba(43,134,255,.3); }
+        .wallet-card .wallet-number { font-size: 14px; color: rgba(234,241,255,.5); font-weight: 600; letter-spacing: 1px; font-family: 'Courier New', monospace; }
+        .wallet-card .wallet-balance { font-size: 24px; font-weight: 800; color: #fbbf24; margin-top: 4px; }
+        .wallet-card .wallet-owner { font-size: 13px; color: rgba(234,241,255,.4); margin-top: 4px; }
+        
+        .no-wallet { text-align: center; padding: 40px 20px; color: rgba(234,241,255,.4); }
+        .no-wallet .icon { font-size: 48px; display: block; margin-bottom: 12px; }
+        
+        #qrReader { width: 100%; aspect-ratio: 1/1; border-radius: 16px; overflow: hidden; background: #000; margin-bottom: 12px; }
+        #qrReader video { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
 
 <div class="app">
 
-    <!-- ===== AUTH SCREEN ===== -->
+    <!-- ===== AUTH ===== -->
     <section id="scr-auth" class="screen active">
         <div class="glass" style="margin-top:20px;">
             <div style="text-align:center; margin-bottom:20px;">
                 <div style="font-size:48px;">💳</div>
                 <h1 style="margin:8px 0 4px; font-size:28px; font-weight:1000; background:linear-gradient(135deg, #2b86ff, #a855f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">LOL Pay</h1>
-                <p style="color:rgba(234,241,255,.6); font-size:14px; font-weight:600;" id="authTitle">Вход в систему</p>
             </div>
             
             <div id="authMsg" class="hidden" style="padding:10px 14px; border-radius:12px; font-size:14px; font-weight:600; margin-bottom:12px;"></div>
             
             <div id="loginFields">
                 <div class="space-y-12">
-                    <div>
-                        <label style="font-size:12px; color:rgba(234,241,255,.35); font-weight:700; text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:6px;">Логин</label>
-                        <input id="loginInput" class="input-field" placeholder="Введите логин" autocomplete="username">
-                    </div>
-                    <div>
-                        <label style="font-size:12px; color:rgba(234,241,255,.35); font-weight:700; text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:6px;">Пароль</label>
-                        <input id="passInput" type="password" class="input-field" placeholder="Введите пароль" autocomplete="current-password">
-                    </div>
+                    <input id="loginInput" class="input-field" placeholder="Логин">
+                    <input id="passInput" type="password" class="input-field" placeholder="Пароль">
                     <button id="authBtn" class="btn">Войти</button>
                     <div style="text-align:center; margin-top:12px; color:rgba(234,241,255,.5); font-size:14px;">
                         Нет аккаунта? <span id="switchToRegister" style="color:#2b86ff; cursor:pointer; font-weight:700;">Зарегистрироваться</span>
@@ -340,97 +335,78 @@
             
             <div id="regFields" class="hidden">
                 <div class="space-y-12">
-                    <div>
-                        <label style="font-size:12px; color:rgba(234,241,255,.35); font-weight:700; text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:6px;">Никнейм</label>
-                        <input id="regNick" class="input-field" placeholder="Ваш никнейм">
-                    </div>
-                    <div>
-                        <label style="font-size:12px; color:rgba(234,241,255,.35); font-weight:700; text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:6px;">Логин</label>
-                        <input id="regLogin" class="input-field" placeholder="Придумайте логин">
-                    </div>
-                    <div>
-                        <label style="font-size:12px; color:rgba(234,241,255,.35); font-weight:700; text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:6px;">Пароль</label>
-                        <input id="regPass" type="password" class="input-field" placeholder="Минимум 4 символа">
-                    </div>
+                    <input id="regNick" class="input-field" placeholder="Никнейм">
+                    <input id="regLogin" class="input-field" placeholder="Логин">
+                    <input id="regPass" type="password" class="input-field" placeholder="Пароль (мин. 4 символа)">
                     <button id="regBtn" class="btn btn-success">Создать аккаунт</button>
                     <div style="text-align:center; margin-top:12px;">
-                        <span id="switchToLogin" style="color:#2b86ff; cursor:pointer; font-weight:700; font-size:14px;">← Назад ко входу</span>
+                        <span id="switchToLogin" style="color:#2b86ff; cursor:pointer; font-weight:700; font-size:14px;">← Назад</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== MAIN SCREEN ===== -->
+    <!-- ===== MAIN ===== -->
     <section id="scr-main" class="screen">
-        <div class="glass">
-            <div class="profile-header">
-                <img id="mainAvatar" class="avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Crect width='256' height='256' rx='50' fill='%232b86ff'/%3E%3Ccircle cx='128' cy='96' r='44' fill='rgba(255,255,255,.85)'/%3E%3Cpath d='M48 210c18-44 54-66 80-66s62 22 80 66' fill='rgba(255,255,255,.78)'/%3E%3C/svg%3E" alt="avatar">
-                <div class="profile-info">
-                    <h2 id="mainNick">...</h2>
-                    <p id="mainLogin">@login</p>
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="main">💳 Основная</button>
+            <button class="tab-btn" data-tab="wallet">👛 Кошелек</button>
+        </div>
+        
+        <div id="tab-main" class="tab-content">
+            <div class="glass">
+                <div class="profile-header">
+                    <img id="mainAvatar" class="avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Crect width='256' height='256' rx='50' fill='%232b86ff'/%3E%3Ccircle cx='128' cy='96' r='44' fill='rgba(255,255,255,.85)'/%3E%3Cpath d='M48 210c18-44 54-66 80-66s62 22 80 66' fill='rgba(255,255,255,.78)'/%3E%3C/svg%3E" alt="avatar">
+                    <div class="profile-info">
+                        <h2 id="mainNick">...</h2>
+                        <p id="mainLogin">@login</p>
+                    </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="balance-display">
+                    <span>🤣</span>
+                    <span id="mainBalance">0</span>
+                </div>
+                <div style="text-align:center; margin-top:-8px; margin-bottom:8px;">
+                    <span class="badge badge-gold">Основной баланс</span>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="space-y-12">
+                    <button id="createPaymentBtn" class="btn btn-gold">💳 Создать оплату</button>
+                    <button id="payBtn" class="btn btn-blue">📱 Оплатить</button>
+                    <button id="logoutBtn" class="btn btn-danger">🚪 Выйти</button>
                 </div>
             </div>
-            
-            <div class="divider"></div>
-            
-            <div class="balance-display">
-                <span>🤣</span>
-                <span id="mainBalance">0</span>
-            </div>
-            <div style="text-align:center; margin-top:-8px; margin-bottom:8px;">
-                <span class="badge badge-gold">Основной баланс</span>
-            </div>
-            
-            <div class="divider"></div>
-            
-            <div class="space-y-12">
-                <button id="createPaymentBtn" class="btn btn-gold">💳 Создать оплату</button>
-                <button id="payBtn" class="btn btn-blue">📱 Оплатить</button>
-                <button id="logoutBtn" class="btn btn-danger">🚪 Выйти</button>
-            </div>
+        </div>
+        
+        <div id="tab-wallet" class="tab-content hidden">
+            <div id="walletContent"></div>
         </div>
     </section>
 
-    <!-- ===== CREATE PAYMENT SCREEN ===== -->
+    <!-- ===== CREATE ===== -->
     <section id="scr-create" class="screen">
         <div style="max-width:440px; margin:0 auto;">
             <button class="back-btn" id="createBackBtn">← Назад</button>
-            
             <div class="glass mt-12">
-                <h2 style="margin:0 0 4px; font-size:22px;">💳 Создать оплату</h2>
-                <p style="color:rgba(234,241,255,.6); font-size:14px; margin:0 0 16px;">Счет действителен 5 минут</p>
-                
+                <h2 style="margin:0 0 16px;">💳 Создать оплату</h2>
                 <div class="space-y-12">
-                    <div>
-                        <label style="font-size:12px; color:rgba(234,241,255,.35); font-weight:700; text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:6px;">Сумма (LOL)</label>
-                        <input id="payAmount" type="number" class="input-field" placeholder="Введите сумму" min="1">
-                    </div>
-                    
-                    <div style="background:rgba(251,191,36,.08); border-radius:12px; padding:12px; border:1px solid rgba(251,191,36,.15);">
-                        <p style="margin:0; font-size:13px; color:rgba(234,241,255,.6);">
-                            ⚠️ Вы получите <strong style="color:#fbbf24;">80%</strong> от суммы (20% комиссия)
-                        </p>
-                    </div>
-                    
-                    <div style="background:rgba(43,134,255,.08); border-radius:12px; padding:12px; border:1px solid rgba(43,134,255,.15);">
-                        <p style="margin:0; font-size:13px; color:rgba(234,241,255,.6);">
-                            📍 GPS используется для Fast Lolling<br>
-                            <span style="font-size:12px;">Разрешите геолокацию для поиска рядом</span>
-                        </p>
-                    </div>
-                    
+                    <input id="payAmount" type="number" class="input-field" placeholder="Сумма (LOL)" min="1">
                     <button id="createPayBtn" class="btn btn-gold">✅ Создать счет</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== PAYMENT DETAIL SCREEN ===== -->
+    <!-- ===== PAYMENT DETAIL ===== -->
     <section id="scr-payment-detail" class="screen">
         <div style="max-width:440px; margin:0 auto;">
             <button class="back-btn" id="detailBackBtn">← Назад</button>
-            
             <div class="glass mt-12">
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
                     <span style="font-size:32px;">💳</span>
@@ -446,53 +422,42 @@
                     <div class="row"><span class="label">Вы получите</span><span class="value" style="color:#fbbf24;" id="detailReceive">— 🤣</span></div>
                 </div>
                 
-                <div style="text-align:center; margin:12px 0 4px;">
-                    <span style="font-size:12px; color:rgba(234,241,255,.4);">📷 QR-код для оплаты</span>
-                </div>
-                <div class="qr-container" id="qrContainer">
-                    <div style="color:#1a1a2e; text-align:center;">Генерация...</div>
-                </div>
+                <div class="qr-container" id="qrContainer"></div>
                 
                 <div class="payment-code">
                     <div class="label">🔢 Код оплаты</div>
                     <div class="code" id="paymentCodeDisplay">000000</div>
-                    <div style="font-size:12px; color:rgba(234,241,255,.4); margin-top:4px;">Скажите код покупателю</div>
                 </div>
                 
-                <button id="cancelPaymentBtn" class="btn btn-danger mt-12">❌ Отменить счет</button>
+                <button id="cancelPaymentBtn" class="btn btn-danger mt-12">❌ Отменить</button>
             </div>
         </div>
     </section>
 
-    <!-- ===== PAY SCREEN (выбор способа) ===== -->
+    <!-- ===== PAY MENU ===== -->
     <section id="scr-pay" class="screen">
         <div style="max-width:440px; margin:0 auto;">
             <button class="back-btn" id="payBackBtn">← Назад</button>
-            
             <div class="glass mt-12">
-                <h2 style="margin:0 0 4px;">📱 Оплата</h2>
-                <p style="color:rgba(234,241,255,.6); font-size:14px; margin:0 0 16px;">Выберите способ оплаты</p>
-                
+                <h2 style="margin:0 0 16px;">📱 Оплата</h2>
                 <div class="space-y-12">
                     <button id="payQrMethod" class="btn btn-blue">📷 QR-код</button>
-                    <button id="payCodeMethod" class="btn btn-purple">🔢 Цифровой код</button>
+                    <button id="payCodeMethod" class="btn btn-purple">🔢 Ввести код</button>
                     <button id="payFastLollingMethod" class="btn btn-gold">📍 Fast Lolling</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== PAY: QR SCAN ===== -->
+    <!-- ===== QR SCANNER ===== -->
     <section id="scr-pay-qr" class="screen">
         <div style="max-width:440px; margin:0 auto;">
             <button class="back-btn" onclick="showScreen('scr-pay')">← Назад</button>
-            
             <div class="glass mt-12">
                 <h2 style="margin:0 0 16px;">📷 Сканировать QR</h2>
-                <div id="qrReader" style="display:none; width:100%; aspect-ratio:1/1; border-radius:16px; overflow:hidden; background:#000;"></div>
-                <button id="scanQrBtn" class="btn btn-blue">Открыть сканер</button>
-                <button id="closeScannerBtn" class="btn btn-danger mt-12" style="display:none;">Закрыть сканер</button>
-                
+                <div id="qrReader" style="display:none;"></div>
+                <button id="scanQrBtn" class="btn btn-blue">📷 Открыть камеру</button>
+                <button id="closeScannerBtn" class="btn btn-danger mt-12" style="display:none;">❌ Закрыть сканер</button>
                 <div id="qrScanResult" class="hidden">
                     <div class="payment-info" id="qrPaymentInfo"></div>
                     <button id="confirmQrPayBtn" class="btn btn-success">✅ Оплатить</button>
@@ -501,16 +466,14 @@
         </div>
     </section>
 
-    <!-- ===== PAY: CODE INPUT ===== -->
+    <!-- ===== CODE INPUT ===== -->
     <section id="scr-pay-code" class="screen">
         <div style="max-width:440px; margin:0 auto;">
             <button class="back-btn" onclick="showScreen('scr-pay')">← Назад</button>
-            
             <div class="glass mt-12">
                 <h2 style="margin:0 0 16px;">🔢 Ввести код</h2>
                 <input id="codeInput" class="input-field" type="text" maxlength="6" placeholder="000000" style="font-size:28px; letter-spacing:8px; text-align:center; font-weight:700; font-family:'Courier New',monospace;">
-                <button id="checkCodeBtn" class="btn btn-blue mt-12">Проверить код</button>
-                
+                <button id="checkCodeBtn" class="btn btn-blue mt-12">Проверить</button>
                 <div id="codeCheckResult" class="hidden">
                     <div class="payment-info" id="codePaymentInfo"></div>
                     <button id="confirmCodePayBtn" class="btn btn-success">✅ Оплатить</button>
@@ -519,48 +482,39 @@
         </div>
     </section>
 
-    <!-- ===== PAY: FAST LOLLING (список) ===== -->
+    <!-- ===== FAST LOLLING ===== -->
     <section id="scr-fastlolling" class="screen">
         <div style="max-width:440px; margin:0 auto;">
             <button class="back-btn" onclick="showScreen('scr-pay')">← Назад</button>
-            
             <div class="glass mt-12">
                 <h2 style="margin:0 0 4px;">📍 Fast Lolling</h2>
-                <p style="color:rgba(234,241,255,.6); font-size:14px; margin:0 0 16px;">Поиск счетов в радиусе 50 метров</p>
-                
+                <p style="color:rgba(234,241,255,.6); font-size:14px; margin:0 0 16px;">Поиск в радиусе 50 метров</p>
                 <div id="fastLollingLoading" style="text-align:center; padding:40px 20px;">
                     <div style="font-size:48px; margin-bottom:12px;">📍</div>
-                    <p style="color:rgba(234,241,255,.6);">Определяем ваше местоположение...</p>
+                    <p style="color:rgba(234,241,255,.6);">Определяем местоположение...</p>
                 </div>
-                
                 <div id="fastLollingList" class="hidden"></div>
             </div>
         </div>
     </section>
 
-    <!-- ===== PAY: FAST LOLLING (оплата) ===== -->
+    <!-- ===== FAST PAY ===== -->
     <section id="scr-fastlolling-pay" class="screen">
         <div style="max-width:440px; margin:0 auto;">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
-                <button class="back-btn" onclick="closeFastLollingPay()">✕</button>
+            <div style="display:flex; justify-content:space-between; margin-bottom:16px;">
+                <button class="back-btn" onclick="showScreen('scr-fastlolling')">← Назад</button>
             </div>
-            
             <div class="glass">
                 <div style="text-align:center; margin-bottom:20px;">
                     <div style="font-size:13px; color:rgba(234,241,255,.5); margin-bottom:8px;">Счёт с кодом</div>
                     <div id="fastPayCode" style="font-size:24px; font-weight:800; letter-spacing:4px; color:#fbbf24; font-family:'Courier New',monospace;">000000</div>
                 </div>
-                
                 <div style="text-align:center; margin:24px 0;">
                     <div id="fastPayAmount" style="font-size:72px; font-weight:1000; background:linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">0 🤣</div>
                 </div>
-                
                 <div class="divider"></div>
-                
                 <div style="font-size:13px; color:rgba(234,241,255,.5); margin-bottom:12px;">Как оплатить:</div>
-                
                 <div id="fastPaySources" style="display:flex; flex-direction:column; gap:10px; margin-bottom:16px;"></div>
-                
                 <button id="confirmFastPayBtn" class="btn btn-success" onclick="confirmFastPay()">💰 Оплатить</button>
             </div>
         </div>
@@ -568,7 +522,15 @@
 
 </div>
 
-<!-- ===== SKRIPTS ===== -->
+<!-- ===== WALLET MODAL ===== -->
+<div id="walletModal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); z-index:3000; display:flex; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:rgba(18,24,38,.95); border:1px solid rgba(255,255,255,.08); border-radius:24px; padding:24px; max-width:400px; width:100%; max-height:90vh; overflow-y:auto; position:relative;">
+        <button onclick="closeWalletModal()" style="position:absolute; top:16px; right:16px; background:none; border:none; color:rgba(234,241,255,.5); font-size:24px; cursor:pointer;">✕</button>
+        <h3 style="margin:0 0 16px;">👛 Кошелек</h3>
+        <div id="walletModalContent"></div>
+    </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -576,7 +538,7 @@
 
 <script>
 // ============================================================
-// FIREBASE CONFIG
+// FIREBASE
 // ============================================================
 const firebaseConfig = {
     apiKey: "AIzaSyCl9xOzUawqggpwyZQupGYm67RiWT42b7A",
@@ -591,93 +553,56 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // ============================================================
-// ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+// ПОМОЩНИКИ
 // ============================================================
-function randId(prefix = "u") {
-    return prefix + "_" + Math.random().toString(36).slice(2, 10) + "_" + Date.now().toString(36);
-}
-
-function generateCode() {
-    return String(Math.floor(100000 + Math.random() * 900000));
-}
-
+function randId(p = "u") { return p + "_" + Math.random().toString(36).slice(2, 10) + "_" + Date.now().toString(36); }
+function generateCode() { return String(Math.floor(100000 + Math.random() * 900000)); }
 const defaultAvatar = "data:image/svg+xml;base64," + btoa(`<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs><rect width="256" height="256" rx="80" fill="url(#g)"/><circle cx="128" cy="104" r="44" fill="rgba(255,255,255,.85)"/><path d="M48 218c18-44 54-66 80-66s62 22 80 66" fill="rgba(255,255,255,.78)"/></svg>`);
 
 async function sha256Hex(text) {
     const enc = new TextEncoder();
     const data = enc.encode(text);
     const hash = await crypto.subtle.digest("SHA-256", data);
-    const bytes = Array.from(new Uint8Array(hash));
-    return bytes.map(b => b.toString(16).padStart(2, "0")).join("");
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
-function showToast(message, type = 'info') {
-    const existing = document.querySelector('.toast');
-    if (existing) existing.remove();
-    const toast = document.createElement('div');
-    toast.className = 'toast' + (type === 'success' ? ' success' : type === 'error' ? ' error' : '');
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
+function showToast(msg, type = 'info') {
+    document.querySelector('.toast')?.remove();
+    const t = document.createElement('div');
+    t.className = 'toast' + (type === 'success' ? ' success' : type === 'error' ? ' error' : '');
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
 }
 
 function showScreen(id) {
     document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-    const el = document.getElementById(id);
-    if (el) el.classList.add('active');
+    document.getElementById(id)?.classList.add('active');
 }
 
-// ============================================================
-// localStorage (безопасный)
-// ============================================================
-const memoryStorage = {};
-let useLocalStorage = true;
-try {
-    localStorage.setItem('test', 'test');
-    localStorage.removeItem('test');
-} catch (e) {
-    useLocalStorage = false;
-}
-const safeStorage = {
-    set: (k, v) => { try { useLocalStorage ? localStorage.setItem(k, v) : (memoryStorage[k] = v); } catch(e) { memoryStorage[k] = v; } },
-    get: (k) => { try { return useLocalStorage ? localStorage.getItem(k) : (memoryStorage[k] || null); } catch(e) { return memoryStorage[k] || null; } },
-    del: (k) => { try { useLocalStorage ? localStorage.removeItem(k) : delete memoryStorage[k]; } catch(e) { delete memoryStorage[k]; } }
+const mem = {};
+const safe = {
+    set: (k, v) => { try { localStorage.setItem(k, v); } catch(e) { mem[k] = v; } },
+    get: (k) => { try { return localStorage.getItem(k); } catch(e) { return mem[k] || null; } },
+    del: (k) => { try { localStorage.removeItem(k); } catch(e) { delete mem[k]; } }
 };
 
 // ============================================================
-// СЕССИЯ
+// СОСТОЯНИЕ
 // ============================================================
-function saveSession(data) {
-    safeStorage.set("lolpay_session", JSON.stringify({ uid: data.uid, login: data.login, savedAt: Date.now() }));
-}
-function loadSession() {
-    try {
-        const s = safeStorage.get("lolpay_session");
-        if (!s) return null;
-        const p = JSON.parse(s);
-        if (p && p.uid && p.login) return { uid: p.uid, login: p.login };
-        return null;
-    } catch (e) { return null; }
-}
-function clearSession() {
-    safeStorage.del("lolpay_session");
-}
-
-// ============================================================
-// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
-// ============================================================
-let session = null;
 let me = null;
+let session = null;
 let currentPaymentId = null;
-let paymentTimer = null;
 let paymentExpiry = null;
 let paymentDeleteTimer = null;
 let timerInterval = null;
-let html5QrCode = null;
-let isScannerOpen = false;
 let fastPaySelectedPayment = null;
 let fastPaySelectedSource = null;
 let allSources = [];
+let currentWalletId = null;
+let walletCodeVisible = false;
+let html5QrCode = null;
+let isScannerOpen = false;
 
 // ============================================================
 // АВТОРИЗАЦИЯ
@@ -685,8 +610,7 @@ let allSources = [];
 async function findUserByLogin(login) {
     const snap = await db.collection("users").where("login", "==", login).limit(1).get();
     if (snap.empty) return null;
-    const d = snap.docs[0];
-    return { uid: d.id, data: d.data() };
+    return { uid: snap.docs[0].id, data: snap.docs[0].data() };
 }
 
 async function loadUserData(uid) {
@@ -695,124 +619,78 @@ async function loadUserData(uid) {
     return { uid: snap.id, ...snap.data() };
 }
 
-async function performLogin(login, pass) {
-    const found = await findUserByLogin(login);
-    if (!found) throw new Error("Аккаунт не найден");
-    const { uid, data } = found;
-    const calc = await sha256Hex(`${login}:${pass}:${data.salt}`);
-    if (calc !== data.passwordHash) throw new Error("Неверный пароль");
-    const sessionData = { uid, login };
-    saveSession(sessionData);
-    const userData = await loadUserData(uid);
-    if (!userData) throw new Error("Ошибка профиля");
-    return { session: sessionData, user: userData };
-}
-
-async function performRegister(login, pass, nick) {
-    const exists = await findUserByLogin(login);
-    if (exists) throw new Error("Логин занят");
-    const uid = randId("u");
-    const salt = randId("s");
-    const passwordHash = await sha256Hex(`${login}:${pass}:${salt}`);
-    await db.collection("users").doc(uid).set({
-        login: login,
-        nick: nick || login,
-        avatar: defaultAvatar,
-        salt: salt,
-        passwordHash: passwordHash,
-        balance: 100,
-        createdAt: Date.now()
-    });
-    const sessionData = { uid, login };
-    saveSession(sessionData);
-    const userData = await loadUserData(uid);
-    if (!userData) throw new Error("Ошибка профиля");
-    return { session: sessionData, user: userData };
-}
-
-// ============================================================
-// UI: АВТОРИЗАЦИЯ
-// ============================================================
-let isRegisterMode = false;
-
 document.getElementById('authBtn').addEventListener('click', async () => {
-    const msgEl = document.getElementById('authMsg');
-    msgEl.classList.add('hidden');
+    const msg = document.getElementById('authMsg');
+    msg.classList.add('hidden');
     const login = document.getElementById('loginInput').value.trim();
     const pass = document.getElementById('passInput').value;
     
-    if (!login || !pass) {
-        msgEl.className = 'err';
-        msgEl.textContent = 'Заполните логин и пароль';
-        msgEl.classList.remove('hidden');
-        return;
-    }
+    if (!login || !pass) { msg.textContent = 'Заполните поля'; msg.style.color = '#ef4444'; msg.classList.remove('hidden'); return; }
     
     try {
-        const result = await performLogin(login, pass);
-        session = result.session;
-        me = result.user;
-        showToast('✅ Добро пожаловать, ' + me.nick + '!', 'success');
+        const found = await findUserByLogin(login);
+        if (!found) throw new Error("Аккаунт не найден");
+        const calc = await sha256Hex(`${login}:${pass}:${found.data.salt}`);
+        if (calc !== found.data.passwordHash) throw new Error("Неверный пароль");
+        
+        session = { uid: found.uid, login };
+        safe.set("lolpay_session", JSON.stringify(session));
+        me = await loadUserData(found.uid);
+        showToast('✅ Добро пожаловать!', 'success');
         renderMainScreen();
         showScreen('scr-main');
     } catch (e) {
-        msgEl.className = 'err';
-        msgEl.textContent = '❌ ' + e.message;
-        msgEl.classList.remove('hidden');
+        msg.textContent = '❌ ' + e.message;
+        msg.style.color = '#ef4444';
+        msg.classList.remove('hidden');
     }
 });
 
 document.getElementById('regBtn').addEventListener('click', async () => {
-    const msgEl = document.getElementById('authMsg');
-    msgEl.classList.add('hidden');
+    const msg = document.getElementById('authMsg');
+    msg.classList.add('hidden');
     const login = document.getElementById('regLogin').value.trim();
     const pass = document.getElementById('regPass').value;
     const nick = document.getElementById('regNick').value.trim();
     
-    if (!login || !pass || !nick) {
-        msgEl.className = 'err';
-        msgEl.textContent = 'Заполните все поля';
-        msgEl.classList.remove('hidden');
-        return;
-    }
-    if (pass.length < 4) {
-        msgEl.className = 'err';
-        msgEl.textContent = 'Пароль минимум 4 символа';
-        msgEl.classList.remove('hidden');
-        return;
-    }
+    if (!login || !pass || !nick) { msg.textContent = 'Заполните все поля'; msg.style.color = '#ef4444'; msg.classList.remove('hidden'); return; }
+    if (pass.length < 4) { msg.textContent = 'Пароль минимум 4 символа'; msg.style.color = '#ef4444'; msg.classList.remove('hidden'); return; }
     
     try {
-        const result = await performRegister(login, pass, nick);
-        session = result.session;
-        me = result.user;
+        const exists = await findUserByLogin(login);
+        if (exists) throw new Error("Логин занят");
+        
+        const uid = randId("u");
+        const salt = randId("s");
+        const passwordHash = await sha256Hex(`${login}:${pass}:${salt}`);
+        
+        await db.collection("users").doc(uid).set({
+            login, nick: nick || login, avatar: defaultAvatar,
+            salt, passwordHash, balance: 100, createdAt: Date.now()
+        });
+        
+        session = { uid, login };
+        safe.set("lolpay_session", JSON.stringify(session));
+        me = await loadUserData(uid);
         showToast('✅ Аккаунт создан!', 'success');
         renderMainScreen();
         showScreen('scr-main');
     } catch (e) {
-        msgEl.className = 'err';
-        msgEl.textContent = '❌ ' + e.message;
-        msgEl.classList.remove('hidden');
+        msg.textContent = '❌ ' + e.message;
+        msg.style.color = '#ef4444';
+        msg.classList.remove('hidden');
     }
 });
 
 document.getElementById('switchToRegister').addEventListener('click', () => {
-    isRegisterMode = true;
     document.getElementById('regFields').classList.remove('hidden');
     document.getElementById('loginFields').classList.add('hidden');
-    document.getElementById('authTitle').textContent = 'Регистрация';
 });
-
 document.getElementById('switchToLogin').addEventListener('click', () => {
-    isRegisterMode = false;
     document.getElementById('regFields').classList.add('hidden');
     document.getElementById('loginFields').classList.remove('hidden');
-    document.getElementById('authTitle').textContent = 'Вход в систему';
 });
 
-// ============================================================
-// ГЛАВНЫЙ ЭКРАН
-// ============================================================
 function renderMainScreen() {
     if (!me) return;
     document.getElementById('mainAvatar').src = me.avatar || defaultAvatar;
@@ -822,35 +700,40 @@ function renderMainScreen() {
 }
 
 document.getElementById('logoutBtn').addEventListener('click', () => {
-    if (confirm('Выйти?')) {
-        clearSession();
-        session = null;
-        me = null;
-        showScreen('scr-auth');
-    }
+    if (!confirm('Выйти?')) return;
+    safe.del("lolpay_session");
+    me = null;
+    session = null;
+    showScreen('scr-auth');
 });
 
 // ============================================================
-// СОЗДАНИЕ ОПЛАТЫ (С GPS)
+// ВКЛАДКИ
+// ============================================================
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const tab = this.dataset.tab;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+        document.getElementById('tab-' + tab).classList.remove('hidden');
+        if (tab === 'wallet') renderWallets();
+    });
+});
+
+// ============================================================
+// СОЗДАНИЕ СЧЁТА
 // ============================================================
 document.getElementById('createPaymentBtn').addEventListener('click', () => {
     document.getElementById('payAmount').value = '';
     showScreen('scr-create');
 });
-
-document.getElementById('createBackBtn').addEventListener('click', () => {
-    showScreen('scr-main');
-});
+document.getElementById('createBackBtn').addEventListener('click', () => showScreen('scr-main'));
 
 document.getElementById('createPayBtn').addEventListener('click', async () => {
     const amount = parseInt(document.getElementById('payAmount').value);
+    if (!amount || amount < 1) { showToast('❌ Введите сумму', 'error'); return; }
     
-    if (!amount || amount < 1) {
-        showToast('❌ Введите корректную сумму', 'error');
-        return;
-    }
-    
-    // Пробуем получить GPS (не обязательно)
     let lat = null, lng = null;
     try {
         const pos = await new Promise((resolve, reject) => {
@@ -860,7 +743,7 @@ document.getElementById('createPayBtn').addEventListener('click', async () => {
         });
         lat = Math.round(pos.coords.latitude * 10000) / 10000;
         lng = Math.round(pos.coords.longitude * 10000) / 10000;
-        console.log('✅ GPS получен');
+        console.log('✅ GPS счёта:', lat, lng);
     } catch (e) {
         console.log('⚠️ GPS не разрешён');
     }
@@ -873,21 +756,16 @@ document.getElementById('createPayBtn').addEventListener('click', async () => {
         id: paymentId,
         fromUid: me.uid,
         fromNick: me.nick,
-        toUid: me.uid,
-        toNick: me.nick,
         amount: amount,
         fee: Math.round(amount * 0.2),
         recipientAmount: Math.round(amount * 0.8),
         code: code,
         createdAt: Date.now(),
         expiresAt: expiresAt,
-        status: 'pending',
-        paidBy: null,
-        paidAt: null
+        status: 'pending'
     };
     
-    // SHA-256 для QR
-    const hashData = { id: paymentId, amount: amount, recipient: me.nick, code: code, timestamp: Date.now() };
+    const hashData = { id: paymentId, amount, recipient: me.nick, code, timestamp: Date.now() };
     paymentData.qrHash = await sha256Hex(JSON.stringify(hashData));
     
     if (lat !== null && lng !== null) {
@@ -901,68 +779,45 @@ document.getElementById('createPayBtn').addEventListener('click', async () => {
     paymentExpiry = expiresAt;
     startPaymentTimer(paymentId, expiresAt);
     
-    showToast('✅ Счет создан!', 'success');
+    showToast('✅ Счёт создан!', 'success');
     showPaymentDetail(paymentId, paymentData.qrHash);
 });
 
 // ============================================================
-// ТАЙМЕР (5 минут → удаление)
+// ТАЙМЕР
 // ============================================================
 function startPaymentTimer(paymentId, expiresAt) {
     if (paymentDeleteTimer) clearTimeout(paymentDeleteTimer);
-    if (timerInterval) clearInterval(timerInterval);
-    
     const timeLeft = expiresAt - Date.now();
-    if (timeLeft <= 0) {
-        deletePayment(paymentId);
-        return;
-    }
-    
-    paymentDeleteTimer = setTimeout(async () => {
-        await deletePayment(paymentId);
-    }, timeLeft);
+    if (timeLeft <= 0) { deletePayment(paymentId); return; }
+    paymentDeleteTimer = setTimeout(() => deletePayment(paymentId), timeLeft);
 }
 
 function updatePaymentTimer() {
     if (!paymentExpiry) return;
     const remaining = Math.max(0, paymentExpiry - Date.now());
-    const timerEl = document.getElementById('detailTimer');
-    if (!timerEl) return;
-    
-    if (remaining <= 0) {
-        timerEl.textContent = '⏱ 00:00';
-        timerEl.className = 'timer danger';
-        return;
-    }
-    
-    const totalSec = Math.floor(remaining / 1000);
-    const min = String(Math.floor(totalSec / 60)).padStart(2, '0');
-    const sec = String(totalSec % 60).padStart(2, '0');
-    timerEl.textContent = '⏱ ' + min + ':' + sec;
-    timerEl.className = 'timer' + (remaining < 60000 ? ' danger' : remaining < 120000 ? ' warning' : '');
+    const el = document.getElementById('detailTimer');
+    if (!el) return;
+    if (remaining <= 0) { el.textContent = '⏱ 00:00'; el.className = 'timer danger'; return; }
+    const s = Math.floor(remaining / 1000);
+    const min = String(Math.floor(s / 60)).padStart(2, '0');
+    const sec = String(s % 60).padStart(2, '0');
+    el.textContent = '⏱ ' + min + ':' + sec;
+    el.className = 'timer' + (remaining < 60000 ? ' danger' : remaining < 120000 ? ' warning' : '');
 }
 
 async function deletePayment(paymentId) {
     try {
-        const docRef = db.collection('payments').doc(paymentId);
-        const doc = await docRef.get();
-        if (!doc.exists) return;
-        if (doc.data().status === 'paid') return;
-        
-        await docRef.delete();
-        console.log('🗑️ Счёт удалён');
-        
+        const ref = db.collection('payments').doc(paymentId);
+        const doc = await ref.get();
+        if (!doc.exists || doc.data().status === 'paid') return;
+        await ref.delete();
         if (currentPaymentId === paymentId) {
-            showToast('⏰ Срок действия счёта истёк', 'error');
+            showToast('⏰ Счёт истёк', 'error');
             if (timerInterval) clearInterval(timerInterval);
-            setTimeout(() => {
-                showScreen('scr-main');
-                renderMainScreen();
-            }, 1500);
+            setTimeout(() => { showScreen('scr-main'); renderMainScreen(); }, 1500);
         }
-    } catch (e) {
-        console.error('Ошибка удаления:', e);
-    }
+    } catch (e) {}
 }
 
 // ============================================================
@@ -973,24 +828,21 @@ async function showPaymentDetail(paymentId, qrHash) {
     if (!doc.exists) return;
     const data = doc.data();
     
-    document.getElementById('detailRecipient').textContent = data.toNick;
+    document.getElementById('detailRecipient').textContent = data.fromNick;
     document.getElementById('detailAmount').textContent = data.amount + ' 🤣';
     document.getElementById('detailReceive').textContent = data.recipientAmount + ' 🤣 (80%)';
-    document.getElementById('paymentCodeDisplay').textContent = data.code || '000000';
+    document.getElementById('paymentCodeDisplay').textContent = data.code;
     
     const qrContainer = document.getElementById('qrContainer');
     qrContainer.innerHTML = '';
-    const qrText = 'lolpay://pay?hash=' + (qrHash || data.qrHash);
-    
     try {
         new QRCode(qrContainer, {
-            text: qrText, width: 200, height: 200,
+            text: 'lolpay://pay?hash=' + (qrHash || data.qrHash),
+            width: 200, height: 200,
             colorDark: '#1a1a2e', colorLight: '#ffffff',
             correctLevel: QRCode.CorrectLevel.H
         });
-    } catch (e) {
-        qrContainer.innerHTML = '<div style="color:#1a1a2e;">Ошибка QR</div>';
-    }
+    } catch (e) {}
     
     updatePaymentTimer();
     if (timerInterval) clearInterval(timerInterval);
@@ -1002,15 +854,11 @@ async function showPaymentDetail(paymentId, qrHash) {
             showScreen('scr-main');
             return;
         }
-        const pData = snap.data();
-        if (pData.status === 'paid') {
+        if (snap.data().status === 'paid') {
             if (timerInterval) clearInterval(timerInterval);
             if (paymentDeleteTimer) clearTimeout(paymentDeleteTimer);
-            showPaymentAnimation(pData.fromNick, pData.toNick, pData.amount);
-            setTimeout(() => {
-                showScreen('scr-main');
-                renderMainScreen();
-            }, 2000);
+            showPaymentAnimation(me.nick, data.fromNick, data.amount);
+            setTimeout(() => { showScreen('scr-main'); renderMainScreen(); }, 2000);
         }
     });
     
@@ -1024,47 +872,37 @@ async function showPaymentDetail(paymentId, qrHash) {
     };
     
     document.getElementById('cancelPaymentBtn').onclick = async () => {
-        if (!confirm('Отменить счёт?')) return;
-        try {
-            if (paymentDeleteTimer) clearTimeout(paymentDeleteTimer);
-            await db.collection('payments').doc(paymentId).delete();
-            showToast('❌ Счёт отменён', 'error');
-            if (timerInterval) clearInterval(timerInterval);
-            unsub();
-            showScreen('scr-main');
-        } catch (e) {
-            showToast('Ошибка: ' + e.message, 'error');
-        }
+        if (!confirm('Отменить?')) return;
+        if (paymentDeleteTimer) clearTimeout(paymentDeleteTimer);
+        await db.collection('payments').doc(paymentId).delete();
+        showToast('❌ Отменён', 'error');
+        if (timerInterval) clearInterval(timerInterval);
+        unsub();
+        showScreen('scr-main');
     };
 }
 
 // ============================================================
-// ОПЛАТА: ГЛАВНЫЙ ЭКРАН
+// ОПЛАТА
 // ============================================================
-document.getElementById('payBtn').addEventListener('click', () => {
-    showScreen('scr-pay');
-});
+document.getElementById('payBtn').addEventListener('click', () => showScreen('scr-pay'));
+document.getElementById('payBackBtn').addEventListener('click', () => showScreen('scr-main'));
 
-document.getElementById('payBackBtn').addEventListener('click', () => {
-    showScreen('scr-main');
-});
-
-// QR
 document.getElementById('payQrMethod').addEventListener('click', () => {
+    document.getElementById('qrScanResult').classList.add('hidden');
+    document.getElementById('qrReader').style.display = 'none';
+    document.getElementById('scanQrBtn').style.display = 'block';
+    document.getElementById('closeScannerBtn').style.display = 'none';
     showScreen('scr-pay-qr');
 });
 
-// Код
 document.getElementById('payCodeMethod').addEventListener('click', () => {
     document.getElementById('codeInput').value = '';
     document.getElementById('codeCheckResult').classList.add('hidden');
     showScreen('scr-pay-code');
 });
 
-// Fast Lolling
-document.getElementById('payFastLollingMethod').addEventListener('click', () => {
-    openFastLolling();
-});
+document.getElementById('payFastLollingMethod').addEventListener('click', openFastLolling);
 
 // ============================================================
 // QR-СКАНЕР
@@ -1076,8 +914,8 @@ document.getElementById('scanQrBtn').addEventListener('click', async () => {
     }
     
     try {
-        const readerContainer = document.getElementById('qrReader');
-        readerContainer.style.display = 'block';
+        const reader = document.getElementById('qrReader');
+        reader.style.display = 'block';
         document.getElementById('scanQrBtn').style.display = 'none';
         document.getElementById('closeScannerBtn').style.display = 'block';
         
@@ -1106,6 +944,7 @@ async function onQrScanSuccess(decodedText) {
         try { await html5QrCode.stop(); await html5QrCode.clear(); } catch(e) {}
         isScannerOpen = false;
     }
+    
     document.getElementById('qrReader').style.display = 'none';
     document.getElementById('closeScannerBtn').style.display = 'none';
     document.getElementById('scanQrBtn').style.display = 'block';
@@ -1113,43 +952,22 @@ async function onQrScanSuccess(decodedText) {
     try {
         let qrHash = decodedText.replace('lolpay://pay?hash=', '');
         
-        const snap = await db.collection('payments')
-            .where('qrHash', '==', qrHash)
-            .limit(1)
-            .get();
-        
-        if (snap.empty) {
-            showToast('❌ Счёт не найден', 'error');
-            return;
-        }
+        const snap = await db.collection('payments').where('qrHash', '==', qrHash).limit(1).get();
+        if (snap.empty) { showToast('❌ Счёт не найден', 'error'); return; }
         
         const doc = snap.docs[0];
         const data = doc.data();
         
-        if (data.status !== 'pending' || data.expiresAt < Date.now()) {
-            showToast('❌ Счёт недействителен', 'error');
-            return;
-        }
+        if (data.status !== 'pending' || data.expiresAt < Date.now()) { showToast('❌ Недействителен', 'error'); return; }
+        if (data.fromUid === me.uid) { showToast('❌ Это ваш счёт', 'error'); return; }
         
-        if (data.fromUid === me.uid) {
-            showToast('❌ Это ваш счёт', 'error');
-            return;
-        }
-        
-        showQrPaymentInfo({ id: doc.id, ...data });
-    } catch (e) {
-        showToast('❌ Ошибка: ' + e.message, 'error');
-    }
-}
-
-function showQrPaymentInfo(data) {
-    document.getElementById('qrScanResult').classList.remove('hidden');
-    document.getElementById('qrPaymentInfo').innerHTML = `
-        <div class="row"><span class="label">Продавец</span><span class="value">${data.fromNick}</span></div>
-        <div class="row"><span class="label">Сумма</span><span class="value">${data.amount} 🤣</span></div>
-        <div class="row"><span class="label">Вы получите</span><span class="value" style="color:#fbbf24;">${data.recipientAmount} 🤣</span></div>
-    `;
-    document.getElementById('confirmQrPayBtn').onclick = () => openPaymentFromSource(data);
+        document.getElementById('qrScanResult').classList.remove('hidden');
+        document.getElementById('qrPaymentInfo').innerHTML = `
+            <div class="row"><span class="label">Продавец</span><span class="value">${data.fromNick}</span></div>
+            <div class="row"><span class="label">Сумма</span><span class="value">${data.amount} 🤣</span></div>
+        `;
+        document.getElementById('confirmQrPayBtn').onclick = () => openPaymentFromSource({ id: doc.id, ...data });
+    } catch (e) { showToast('❌ ' + e.message, 'error'); }
 }
 
 document.getElementById('closeScannerBtn').addEventListener('click', async () => {
@@ -1167,35 +985,17 @@ document.getElementById('closeScannerBtn').addEventListener('click', async () =>
 // ============================================================
 document.getElementById('checkCodeBtn').addEventListener('click', async () => {
     const code = document.getElementById('codeInput').value.trim();
-    
-    if (!code || code.length !== 6) {
-        showToast('Введите 6-значный код', 'error');
-        return;
-    }
+    if (!code || code.length !== 6) { showToast('Введите 6 цифр', 'error'); return; }
     
     try {
-        const snap = await db.collection('payments')
-            .where('code', '==', code)
-            .limit(1)
-            .get();
-        
-        if (snap.empty) {
-            showToast('❌ Неверный код', 'error');
-            return;
-        }
+        const snap = await db.collection('payments').where('code', '==', code).limit(1).get();
+        if (snap.empty) { showToast('❌ Неверный код', 'error'); return; }
         
         const doc = snap.docs[0];
         const data = doc.data();
         
-        if (data.status !== 'pending' || data.expiresAt < Date.now()) {
-            showToast('❌ Счёт недействителен', 'error');
-            return;
-        }
-        
-        if (data.fromUid === me.uid) {
-            showToast('❌ Это ваш счёт', 'error');
-            return;
-        }
+        if (data.status !== 'pending' || data.expiresAt < Date.now()) { showToast('❌ Недействителен', 'error'); return; }
+        if (data.fromUid === me.uid) { showToast('❌ Это ваш счёт', 'error'); return; }
         
         document.getElementById('codeCheckResult').classList.remove('hidden');
         document.getElementById('codePaymentInfo').innerHTML = `
@@ -1203,9 +1003,7 @@ document.getElementById('checkCodeBtn').addEventListener('click', async () => {
             <div class="row"><span class="label">Сумма</span><span class="value">${data.amount} 🤣</span></div>
         `;
         document.getElementById('confirmCodePayBtn').onclick = () => openPaymentFromSource({ id: doc.id, ...data });
-    } catch (e) {
-        showToast('❌ Ошибка: ' + e.message, 'error');
-    }
+    } catch (e) { showToast('❌ ' + e.message, 'error'); }
 });
 
 document.getElementById('codeInput').addEventListener('input', function() {
@@ -1217,15 +1015,6 @@ document.getElementById('codeInput').addEventListener('input', function() {
 // ============================================================
 // FAST LOLLING
 // ============================================================
-function getGPS() {
-    return new Promise((resolve, reject) => {
-        if (!navigator.geolocation) reject(new Error('GPS не поддерживается'));
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-            enableHighAccuracy: true, timeout: 10000, maximumAge: 0
-        });
-    });
-}
-
 function calculateDistance(lat1, lng1, lat2, lng2) {
     const R = 6371000;
     const φ1 = lat1 * Math.PI / 180;
@@ -1233,25 +1022,42 @@ function calculateDistance(lat1, lng1, lat2, lng2) {
     const Δφ = (lat2 - lat1) * Math.PI / 180;
     const Δλ = (lng2 - lng1) * Math.PI / 180;
     const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) * Math.sin(Δλ/2);
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function getGPS() {
+    return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) { reject(new Error('GPS не поддерживается')); return; }
+        console.log('📡 Запрашиваю GPS...');
+        navigator.geolocation.getCurrentPosition(
+            (pos) => { console.log('✅ GPS получен:', pos.coords.latitude, pos.coords.longitude); resolve(pos); },
+            (err) => { console.error('❌ GPS ошибка:', err.message); reject(err); },
+            { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
+    });
 }
 
 async function openFastLolling() {
+    console.log('🚀 Fast Lolling запущен');
     showScreen('scr-fastlolling');
     
-    const loadingEl = document.getElementById('fastLollingLoading');
-    const listEl = document.getElementById('fastLollingList');
+    const loading = document.getElementById('fastLollingLoading');
+    const list = document.getElementById('fastLollingList');
     
-    loadingEl.classList.remove('hidden');
-    listEl.classList.add('hidden');
-    loadingEl.innerHTML = '<div style="font-size:48px; margin-bottom:12px;">📍</div><p style="color:rgba(234,241,255,.6);">Определяем ваше местоположение...</p>';
+    loading.classList.remove('hidden');
+    list.classList.add('hidden');
+    loading.innerHTML = '<div style="font-size:48px; margin-bottom:12px;">📍</div><p style="color:rgba(234,241,255,.6);">Определяем местоположение...</p>';
     
     try {
         const pos = await getGPS();
         const myLat = pos.coords.latitude;
         const myLng = pos.coords.longitude;
         
-        const snap = await db.collection('payments').get();
+        console.log('✅ Мои координаты:', myLat, myLng, 'точность:', pos.coords.accuracy);
+        loading.innerHTML = '<div style="font-size:48px; margin-bottom:12px;">🔍</div><p style="color:rgba(234,241,255,.6);">Ищем счета рядом...</p>';
+        
+        const snap = await db.collection('payments').where('status', '==', 'pending').get();
+        console.log('📦 Всего счетов:', snap.size);
         
         const nearby = [];
         const now = Date.now();
@@ -1260,23 +1066,24 @@ async function openFastLolling() {
             const data = doc.data();
             if (data.fromUid === me.uid) return;
             if (data.expiresAt < now) return;
-            if (data.status !== 'pending') return;
-            if (!data.lat || !data.lng) return;
+            if (!data.lat || !data.lng) { console.log('⏭️ Счёт без GPS:', doc.id); return; }
             
             const distance = calculateDistance(myLat, myLng, data.lat, data.lng);
+            console.log('📏 Расстояние до', doc.id, ':', Math.round(distance), 'м');
+            
             if (distance <= 50) {
                 nearby.push({ id: doc.id, ...data, distance: Math.round(distance) });
             }
         });
         
         if (nearby.length === 0) {
-            loadingEl.innerHTML = '<div style="font-size:48px; margin-bottom:12px;">😔</div><p style="color:rgba(234,241,255,.6);">Рядом нет активных счетов</p>';
+            loading.innerHTML = '<div style="font-size:48px; margin-bottom:12px;">😔</div><p style="color:rgba(234,241,255,.6);">Рядом нет активных счетов</p>';
             return;
         }
         
         nearby.sort((a, b) => a.distance - b.distance);
-        loadingEl.classList.add('hidden');
-        listEl.classList.remove('hidden');
+        loading.classList.add('hidden');
+        list.classList.remove('hidden');
         
         let html = '<div style="display:flex; flex-direction:column; gap:12px;">';
         nearby.forEach((p, idx) => {
@@ -1286,21 +1093,23 @@ async function openFastLolling() {
                     <div class="code-value">${p.code}</div>
                     <div class="amount-value">${p.amount} 🤣</div>
                     <div class="distance">📍 ${p.distance} метров</div>
-                    <button class="btn btn-success" style="width:100%; margin-top:12px;" onclick="selectFastPayment(${idx})">
-                        Выбрать счёт
-                    </button>
+                    <button class="btn btn-success" style="width:100%; margin-top:12px;" onclick="selectFastPayment(${idx})">Выбрать счёт</button>
                 </div>
             `;
         });
         html += '</div>';
-        listEl.innerHTML = html;
-        
+        list.innerHTML = html;
         window._fastPayments = nearby;
+        
     } catch (err) {
-        console.error('GPS ошибка:', err);
-        loadingEl.innerHTML = `
+        let errorMsg = 'Разрешите доступ к геолокации';
+        if (err.code === 1) errorMsg = 'Разрешение отклонено';
+        else if (err.code === 2) errorMsg = 'GPS недоступен';
+        else if (err.code === 3) errorMsg = 'Превышено время ожидания';
+        
+        loading.innerHTML = `
             <div style="font-size:48px; margin-bottom:12px;">❌</div>
-            <p style="color:#ef4444; font-weight:700;">Разрешите доступ к геолокации</p>
+            <p style="color:#ef4444; font-weight:700;">${errorMsg}</p>
             <p style="color:rgba(234,241,255,.5); font-size:13px;">Fast Lolling работает только с GPS</p>
         `;
     }
@@ -1309,15 +1118,11 @@ async function openFastLolling() {
 async function selectFastPayment(idx) {
     const payment = window._fastPayments[idx];
     fastPaySelectedPayment = payment;
-    openPaymentFromSource(payment);
-}
-
-function closeFastLollingPay() {
-    showScreen('scr-fastlolling');
+    await openPaymentFromSource(payment);
 }
 
 // ============================================================
-// ОПЛАТА: ВЫБОР ИСТОЧНИКА
+// ОКНО ОПЛАТЫ
 // ============================================================
 async function openPaymentFromSource(payment) {
     fastPaySelectedPayment = payment;
@@ -1328,41 +1133,25 @@ async function openPaymentFromSource(payment) {
     document.getElementById('fastPayAmount').textContent = payment.amount + ' 🤣';
     
     const sourcesEl = document.getElementById('fastPaySources');
-    sourcesEl.innerHTML = '<div style="text-align:center; padding:20px; color:rgba(234,241,255,.5);">Загрузка источников...</div>';
+    sourcesEl.innerHTML = '<div style="text-align:center; padding:20px; color:rgba(234,241,255,.5);">Загрузка...</div>';
     
     showScreen('scr-fastlolling-pay');
     
-    // Загружаем источники
-    allSources = [];
+    allSources.push({ type: 'main', name: '💳 Основной баланс', balance: me.balance || 0 });
     
-    // Основной баланс
-    allSources.push({
-        type: 'main',
-        name: '💳 Основной баланс',
-        balance: me.balance || 0
-    });
-    
-    // Кошельки
     try {
-        const walletsSnap = await db.collection('wallets')
-            .where('ownerId', '==', me.uid)
-            .get();
-        
+        const walletsSnap = await db.collection('wallets').where('ownerId', '==', me.uid).get();
         walletsSnap.forEach(doc => {
             const data = doc.data();
-            const last4 = data.walletNumber.slice(-4);
             allSources.push({
                 type: 'wallet',
                 id: doc.id,
-                name: `👛 •••• ${last4}`,
+                name: `👛 •••• ${data.walletNumber.slice(-4)}`,
                 balance: data.balance || 0
             });
         });
-    } catch (e) {
-        console.warn('Ошибка загрузки кошельков:', e);
-    }
+    } catch (e) {}
     
-    // Сортировка: сначала с достаточным балансом, потом по убыванию
     allSources.sort((a, b) => {
         const aEnough = a.balance >= payment.amount;
         const bEnough = b.balance >= payment.amount;
@@ -1370,32 +1159,26 @@ async function openPaymentFromSource(payment) {
         return b.balance - a.balance;
     });
     
-    // Автовыбор
     fastPaySelectedSource = allSources.find(s => s.balance >= payment.amount) || allSources[0];
-    
     renderSources();
 }
 
 function renderSources() {
-    const sourcesEl = document.getElementById('fastPaySources');
+    const container = document.getElementById('fastPaySources');
     const amount = fastPaySelectedPayment.amount;
     const top2 = allSources.slice(0, 2);
     const rest = allSources.slice(2);
     
     let html = '';
-    
     top2.forEach((s, idx) => {
         const isSelected = fastPaySelectedSource === s;
         const enough = s.balance >= amount;
-        
         html += `
             <div class="source-card ${isSelected ? 'selected' : ''}" onclick="selectSource(${idx})">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
                         <div class="source-name">${s.name}</div>
-                        <div class="source-balance ${enough ? 'enough' : 'not-enough'}">
-                            ${s.balance} 🤣
-                        </div>
+                        <div class="source-balance ${enough ? 'enough' : 'not-enough'}">${s.balance} 🤣</div>
                     </div>
                     ${isSelected ? '<div style="font-size:20px;">✅</div>' : ''}
                 </div>
@@ -1411,7 +1194,7 @@ function renderSources() {
         `;
     }
     
-    sourcesEl.innerHTML = html;
+    container.innerHTML = html;
 }
 
 function selectSource(idx) {
@@ -1423,26 +1206,21 @@ function selectSource(idx) {
 function showAllSources() {
     const amount = fastPaySelectedPayment.amount;
     let html = '<div style="font-size:13px; color:rgba(234,241,255,.5); margin-bottom:12px;">Все источники:</div>';
-    
     allSources.forEach((s, idx) => {
         const isSelected = fastPaySelectedSource === s;
         const enough = s.balance >= amount;
-        
         html += `
             <div class="source-card ${isSelected ? 'selected' : ''}" style="margin-bottom:8px;" onclick="selectFromAll(${idx})">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
                         <div class="source-name">${s.name}</div>
-                        <div class="source-balance ${enough ? 'enough' : 'not-enough'}">
-                            ${s.balance} 🤣
-                        </div>
+                        <div class="source-balance ${enough ? 'enough' : 'not-enough'}">${s.balance} 🤣</div>
                     </div>
                     ${isSelected ? '<div style="font-size:20px;">✅</div>' : ''}
                 </div>
             </div>
         `;
     });
-    
     html += '<button class="btn btn-blue" style="margin-top:12px;" onclick="renderSources()">← Назад</button>';
     document.getElementById('fastPaySources').innerHTML = html;
 }
@@ -1456,22 +1234,15 @@ function selectFromAll(idx) {
 // ПОДТВЕРЖДЕНИЕ ОПЛАТЫ
 // ============================================================
 async function confirmFastPay() {
-    if (!fastPaySelectedPayment || !fastPaySelectedSource) {
-        showToast('❌ Выберите способ оплаты', 'error');
-        return;
-    }
+    if (!fastPaySelectedPayment || !fastPaySelectedSource) { showToast('❌ Выберите способ', 'error'); return; }
     
     const payment = fastPaySelectedPayment;
     const source = fastPaySelectedSource;
     
-    if (source.balance < payment.amount) {
-        showToast('❌ Недостаточно средств на выбранном источнике', 'error');
-        return;
-    }
+    if (source.balance < payment.amount) { showToast('❌ Недостаточно средств', 'error'); return; }
     
     try {
         await db.runTransaction(async (transaction) => {
-            // Читаем источник
             let sourceRef, sourceBalance;
             if (source.type === 'main') {
                 sourceRef = db.collection('users').doc(me.uid);
@@ -1483,54 +1254,37 @@ async function confirmFastPay() {
                 sourceBalance = snap.data().balance || 0;
             }
             
-            if (sourceBalance < payment.amount) throw new Error('Недостаточно средств');
+            if (sourceBalance < payment.amount) throw new Error('Недостаточно');
             
-            // Читаем продавца
             const sellerRef = db.collection('users').doc(payment.fromUid);
             const sellerSnap = await transaction.get(sellerRef);
             const sellerBalance = sellerSnap.data()?.balance || 0;
             
-            // Проверяем счёт
             const paymentRef = db.collection('payments').doc(payment.id);
             const paymentSnap = await transaction.get(paymentRef);
             if (!paymentSnap.exists) throw new Error('Счёт не найден');
             
             const paymentData = paymentSnap.data();
-            if (paymentData.status !== 'pending') throw new Error('Счёт уже оплачен');
-            if (paymentData.expiresAt < Date.now()) throw new Error('Срок истёк');
+            if (paymentData.status !== 'pending') throw new Error('Уже оплачен');
+            if (paymentData.expiresAt < Date.now()) throw new Error('Истёк');
             
-            // ЗАПИСИ
             transaction.update(sourceRef, { balance: sourceBalance - payment.amount });
             transaction.update(sellerRef, { balance: sellerBalance + paymentData.recipientAmount });
-            transaction.delete(paymentRef);  // 🗑️ Удаляем счёт
+            transaction.delete(paymentRef);
         });
         
-        // Обновляем локально
-        if (source.type === 'main') {
-            me.balance -= payment.amount;
-        }
+        if (source.type === 'main') me.balance -= payment.amount;
         
-        // Анимация
         showPaymentAnimation(me.nick, payment.fromNick, payment.amount);
-        showToast('✅ Оплата прошла успешно!', 'success');
-        
-        setTimeout(() => {
-            showScreen('scr-main');
-            renderMainScreen();
-        }, 2000);
-        
-    } catch (e) {
-        showToast('❌ Ошибка: ' + e.message, 'error');
-    }
+        setTimeout(() => { showScreen('scr-main'); renderMainScreen(); }, 2000);
+    } catch (e) { showToast('❌ ' + e.message, 'error'); }
 }
 
 // ============================================================
 // АНИМАЦИЯ ОПЛАТЫ
 // ============================================================
 function showPaymentAnimation(from, to, amount) {
-    const existing = document.querySelector('.payment-animation');
-    if (existing) existing.remove();
-    
+    document.querySelector('.payment-animation')?.remove();
     const div = document.createElement('div');
     div.className = 'payment-animation';
     div.innerHTML = `
@@ -1540,22 +1294,256 @@ function showPaymentAnimation(from, to, amount) {
         <p style="color:rgba(234,241,255,.6); margin-top:12px; font-size:14px;">Оплата получена!</p>
     `;
     document.body.appendChild(div);
-    
     setTimeout(() => div.remove(), 2500);
+}
+
+// ============================================================
+// КОШЕЛЁК
+// ============================================================
+async function renderWallets() {
+    const container = document.getElementById('walletContent');
+    if (!me) return;
+    
+    try {
+        const snap = await db.collection('wallets').where('ownerId', '==', me.uid).get();
+        
+        if (snap.empty) {
+            container.innerHTML = `
+                <div class="glass">
+                    <div class="no-wallet">
+                        <span class="icon">👛</span>
+                        <p style="margin:0 0 12px;">У вас нет кошелька</p>
+                        <button class="btn btn-gold" onclick="createWallet()">➕ Создать кошелёк</button>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+        
+        let html = '<div class="glass">';
+        snap.forEach(doc => {
+            const data = doc.data();
+            html += `
+                <div class="wallet-card" onclick="openWallet('${doc.id}')">
+                    <div class="wallet-number"># ${data.walletNumber}</div>
+                    <div class="wallet-balance">${data.balance || 0} 🤣</div>
+                    <div class="wallet-owner">${data.ownerNick || me.nick}</div>
+                </div>
+            `;
+        });
+        html += `<button class="btn btn-gold" style="margin-top:12px;" onclick="createWallet()">➕ Создать ещё</button></div>`;
+        container.innerHTML = html;
+    } catch (e) {
+        container.innerHTML = `<div class="glass"><p style="color:#ef4444;">❌ Ошибка</p></div>`;
+    }
+}
+
+function generateWalletNumber() {
+    let num = '';
+    for (let i = 0; i < 12; i++) num += Math.floor(Math.random() * 10);
+    return num;
+}
+function generateWalletSecret() {
+    return String(Math.floor(100 + Math.random() * 900));
+}
+
+async function createWallet() {
+    try {
+        const walletNumber = generateWalletNumber();
+        const secretCode = generateWalletSecret();
+        const check = await db.collection('wallets').where('walletNumber', '==', walletNumber).get();
+        if (!check.empty) return createWallet();
+        
+        await db.collection('wallets').add({
+            ownerId: me.uid, ownerNick: me.nick,
+            walletNumber, secretCode, balance: 0,
+            createdAt: Date.now(), isActive: true
+        });
+        
+        showToast('✅ Кошелёк создан: ' + walletNumber, 'success');
+        renderWallets();
+    } catch (e) { showToast('❌ Ошибка', 'error'); }
+}
+
+async function openWallet(walletId) {
+    currentWalletId = walletId;
+    walletCodeVisible = false;
+    
+    const doc = await db.collection('wallets').doc(walletId).get();
+    if (!doc.exists) return;
+    const data = doc.data();
+    
+    document.getElementById('walletModalContent').innerHTML = `
+        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.05);">
+            <span style="color:rgba(234,241,255,.5);">Номер</span>
+            <span style="font-family:'Courier New',monospace; letter-spacing:2px;">${data.walletNumber}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.05);">
+            <span style="color:rgba(234,241,255,.5);">Код оплаты</span>
+            <span style="font-size:24px; letter-spacing:4px; cursor:pointer; color:#fbbf24; font-weight:700;" onclick="toggleWalletSecret()" id="walletSecretDisplay">•••</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.05);">
+            <span style="color:rgba(234,241,255,.5);">Баланс</span>
+            <span style="color:#fbbf24; font-weight:700;">${data.balance || 0} 🤣</span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:16px;">
+            <button class="btn btn-gold" style="padding:10px 8px; font-size:12px;" onclick="walletTopUp()">💰 Пополнить</button>
+            <button class="btn btn-blue" style="padding:10px 8px; font-size:12px;" onclick="walletSend()">📤 Отправить</button>
+            <button class="btn btn-danger" style="padding:10px 8px; font-size:12px;" onclick="walletReissue()">🔄 Перевыпустить</button>
+        </div>
+    `;
+    
+    window._currentWallet = data;
+    document.getElementById('walletModal').classList.remove('hidden');
+}
+
+function closeWalletModal() {
+    document.getElementById('walletModal').classList.add('hidden');
+    currentWalletId = null;
+}
+
+function toggleWalletSecret() {
+    walletCodeVisible = !walletCodeVisible;
+    document.getElementById('walletSecretDisplay').textContent = walletCodeVisible ? window._currentWallet.secretCode : '•••';
+}
+
+async function walletTopUp() {
+    const amount = prompt('Сумма для пополнения:');
+    if (!amount) return;
+    const numAmount = parseInt(amount);
+    if (!numAmount || numAmount < 1) return;
+    if (me.balance < numAmount) { showToast('❌ Недостаточно', 'error'); return; }
+    
+    try {
+        await db.runTransaction(async (transaction) => {
+            const userRef = db.collection('users').doc(me.uid);
+            const userSnap = await transaction.get(userRef);
+            const userBalance = userSnap.data().balance || 0;
+            if (userBalance < numAmount) throw new Error('Недостаточно');
+            
+            const walletRef = db.collection('wallets').doc(currentWalletId);
+            const walletSnap = await transaction.get(walletRef);
+            const walletBalance = walletSnap.data().balance || 0;
+            
+            transaction.update(userRef, { balance: userBalance - numAmount });
+            transaction.update(walletRef, { balance: walletBalance + numAmount });
+        });
+        
+        me.balance -= numAmount;
+        renderMainScreen();
+        closeWalletModal();
+        renderWallets();
+        showToast('✅ Пополнено', 'success');
+    } catch (e) { showToast('❌ ' + e.message, 'error'); }
+}
+
+async function walletSend() {
+    const choice = prompt('Куда?\n1 - На кошелёк\n2 - На основной баланс');
+    if (choice === '1') await walletSendToWallet();
+    else if (choice === '2') await walletSendToMain();
+}
+
+async function walletSendToWallet() {
+    const walletNumber = prompt('Номер кошелька (12 цифр):');
+    if (!walletNumber || walletNumber.length !== 12) { showToast('❌ Неверный номер', 'error'); return; }
+    
+    const snap = await db.collection('wallets').where('walletNumber', '==', walletNumber).limit(1).get();
+    if (snap.empty) { showToast('❌ Не найден', 'error'); return; }
+    
+    const targetDoc = snap.docs[0];
+    const targetData = targetDoc.data();
+    if (targetData.ownerId === me.uid) { showToast('❌ Это ваш', 'error'); return; }
+    
+    const amount = prompt('Сумма:');
+    if (!amount) return;
+    const numAmount = parseInt(amount);
+    if (!numAmount || numAmount < 1) return;
+    
+    const myWallet = window._currentWallet;
+    if (myWallet.balance < numAmount) { showToast('❌ Недостаточно', 'error'); return; }
+    
+    try {
+        await db.runTransaction(async (transaction) => {
+            const myRef = db.collection('wallets').doc(currentWalletId);
+            const mySnap = await transaction.get(myRef);
+            const myBalance = mySnap.data().balance || 0;
+            if (myBalance < numAmount) throw new Error('Недостаточно');
+            
+            const targetRef = db.collection('wallets').doc(targetDoc.id);
+            const targetSnap = await transaction.get(targetRef);
+            const targetBalance = targetSnap.data().balance || 0;
+            
+            transaction.update(myRef, { balance: myBalance - numAmount });
+            transaction.update(targetRef, { balance: targetBalance + numAmount });
+        });
+        
+        closeWalletModal();
+        renderWallets();
+        showToast('✅ Отправлено', 'success');
+    } catch (e) { showToast('❌ ' + e.message, 'error'); }
+}
+
+async function walletSendToMain() {
+    const amount = prompt('Сумма для вывода:');
+    if (!amount) return;
+    const numAmount = parseInt(amount);
+    if (!numAmount || numAmount < 1) return;
+    
+    const myWallet = window._currentWallet;
+    if (myWallet.balance < numAmount) { showToast('❌ Недостаточно', 'error'); return; }
+    
+    try {
+        await db.runTransaction(async (transaction) => {
+            const myRef = db.collection('wallets').doc(currentWalletId);
+            const mySnap = await transaction.get(myRef);
+            const myBalance = mySnap.data().balance || 0;
+            if (myBalance < numAmount) throw new Error('Недостаточно');
+            
+            const userRef = db.collection('users').doc(me.uid);
+            const userSnap = await transaction.get(userRef);
+            const userBalance = userSnap.data().balance || 0;
+            
+            transaction.update(myRef, { balance: myBalance - numAmount });
+            transaction.update(userRef, { balance: userBalance + numAmount });
+        });
+        
+        me.balance += numAmount;
+        renderMainScreen();
+        closeWalletModal();
+        renderWallets();
+        showToast('✅ Выведено', 'success');
+    } catch (e) { showToast('❌ ' + e.message, 'error'); }
+}
+
+async function walletReissue() {
+    const code = prompt('🔐 Код из LoL Auth:');
+    if (!code || code.length < 3) { showToast('❌ Неверный код', 'error'); return; }
+    if (!confirm('Перевыпустить?')) return;
+    
+    try {
+        const newNumber = generateWalletNumber();
+        const newSecret = generateWalletSecret();
+        
+        await db.collection('wallets').doc(currentWalletId).update({
+            walletNumber: newNumber, secretCode: newSecret, reissuedAt: Date.now()
+        });
+        
+        closeWalletModal();
+        renderWallets();
+        showToast('✅ Новый номер: ' + newNumber, 'success');
+    } catch (e) { showToast('❌ ' + e.message, 'error'); }
 }
 
 // ============================================================
 // АВТООЧИСТКА
 // ============================================================
-async function cleanupExpiredPayments() {
+async function cleanupExpired() {
     try {
         const snap = await db.collection('payments').get();
         if (snap.empty) return;
-        
         const now = Date.now();
         const batch = db.batch();
         let count = 0;
-        
         snap.forEach(doc => {
             const data = doc.data();
             if (data.expiresAt < now && data.status === 'pending') {
@@ -1563,41 +1551,37 @@ async function cleanupExpiredPayments() {
                 count++;
             }
         });
-        
-        if (count > 0) {
-            await batch.commit();
-            console.log('🧹 Удалено ' + count + ' просроченных');
-        }
-    } catch (e) {
-        console.error('Ошибка очистки:', e);
-    }
+        if (count > 0) await batch.commit();
+    } catch (e) {}
 }
 
-setInterval(cleanupExpiredPayments, 10000);
-setTimeout(cleanupExpiredPayments, 3000);
+setInterval(cleanupExpired, 30000);
+setTimeout(cleanupExpired, 5000);
 
 // ============================================================
 // ИНИЦИАЛИЗАЦИЯ
 // ============================================================
 (async () => {
-    const saved = loadSession();
-    if (saved && saved.uid) {
+    const saved = safe.get("lolpay_session");
+    if (saved) {
         try {
-            me = await loadUserData(saved.uid);
-            if (me) {
-                session = saved;
-                renderMainScreen();
-                showScreen('scr-main');
-                return;
+            const s = JSON.parse(saved);
+            if (s.uid) {
+                me = await loadUserData(s.uid);
+                if (me) {
+                    session = s;
+                    renderMainScreen();
+                    showScreen('scr-main');
+                    return;
+                }
             }
-        } catch (e) {
-            clearSession();
-        }
+        } catch (e) {}
     }
     showScreen('scr-auth');
 })();
 
-console.log('💳 LOL Pay + Fast Lolling запущен!');
+console.log('💳 LOL Pay ПОЛНЫЙ запущен!');
+console.log('📷 QR + 🔢 Код + 📍 Fast Lolling + 👛 Кошелёк');
 </script>
 </body>
 </html>
